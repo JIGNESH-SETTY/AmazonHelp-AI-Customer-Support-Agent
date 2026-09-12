@@ -7,7 +7,7 @@
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-green.svg)]()
 
-A policy-grounded, high-throughput Customer Support AI Agent engineered on 358,000+ historical AmazonHelp support dialogues. The system combines calibrated statistical intent classification, deterministic policy safety guardrails, BM25 knowledge retrieval, and automated escalation to deliver accurate, non-hallucinatory customer assistance in **under 3.5 milliseconds**.
+An AI customer-support agent for AmazonHelp that combines statistical intent classification, deterministic safety policies, BM25 knowledge retrieval, canonical response templates, and calibrated escalation logic. Evaluated on a protected 200-example human-verified golden set, the final system achieved **82.00% intent accuracy**, **0.8204 Macro F1**, **90.50% guidance adherence**, and **100% policy safety on the evaluation set**, operating with **approximately 3.5 ms mean latency** on standard CPU hardware.
 
 ---
 
@@ -26,7 +26,7 @@ A policy-grounded, high-throughput Customer Support AI Agent engineered on 358,0
 - [Decision Log Expansion & Audit (Stage 16)](#decision-log-expansion--audit-stage-16)
 - [Final Evaluation Report](#final-evaluation-report)
 - [Policy & Safety Guardrails](#policy--safety-guardrails)
-- [Reproduce Headline Results (< 15 Minutes)](#reproduce-headline-results--15-minutes)
+- [Reproduce Headline Results (Under 15 Minutes)](#reproduce-headline-results-under-15-minutes)
 - [Interactive CLI Demo](#interactive-cli-demo)
 - [Repository Structure](#repository-structure)
 - [Testing & Verification](#testing--verification)
@@ -40,11 +40,11 @@ A policy-grounded, high-throughput Customer Support AI Agent engineered on 358,0
 Automated e-commerce customer support systems face a critical dilemma: unconstrained Large Language Models frequently **hallucinate operational commitments** (e.g. claiming a refund has been issued or an order has been cancelled), confuse action verbs with secondary entity mentions, and introduce high latency and API costs.
 
 This project solves these challenges by architecting a hybrid statistical-symbolic agent that:
-1. Accurately determines customer intent across a canonical 10-intent taxonomy.
+1. Accurately determines customer intent across **10 canonical support intents + 1 fallback intent** (`unknown_or_ambiguous`).
 2. Identifies compound secondary intents in complex multi-part queries.
 3. Retrieves verified support documentation via BM25.
 4. Enforces zero-tolerance deterministic guardrails against unsupported actions or PII leaks.
-5. Emits verified, template-grounded responses or escalates to human agents in under 3.5ms.
+5. Emits verified, template-grounded responses or escalates to human agents with approximately 3.5 ms mean latency.
 
 The entire engineering lifecycle—from raw data extraction to baseline construction, evaluation harness engineering, failure diagnosis, and decision logging—is fully documented and 100% reproducible offline.
 
@@ -55,7 +55,7 @@ The entire engineering lifecycle—from raw data extraction to baseline construc
 - **Hybrid Intent Understanding**: Combines sublinear TF-IDF Naive Bayes log-posteriors with domain keyword boosters and compound multi-intent priority logic.
 - **Context & Entity Extraction**: Extracts 17-digit Amazon order numbers (`\d{3}-\d{7}-\d{7}`), carrier tracking numbers, and urgency/sentiment markers.
 - **BM25 Knowledge Retrieval**: Lexical indexing over canonical Amazon support guidelines with sub-millisecond query latency.
-- **Deterministic Policy Safety**: Hard regex guardrails that prevent unauthorized financial promises ("I have refunded $XX") or date hallucinations.
+- **Deterministic Policy Safety**: Hard regex guardrails that prevent unauthorized financial promises ("I have refunded $XX") or unverified commitment claims, achieving 100% policy safety on the 200-example evaluation set.
 - **Calibrated Human Escalation**: Automatically routes high-severity customer frustration or low-confidence queries to human tier.
 - **Protected Golden Evaluation Set**: Stratified 200-conversation benchmark with zero train-split leakage and verified immutability.
 - **Model-Agnostic Evaluation Harness**: Measures classification, generation, safety, escalation, and latency with 95% bootstrap confidence intervals.
@@ -94,8 +94,19 @@ flowchart LR
     D --> E[Failure Clustering &\nHigh-Confidence Error Audit]
     E --> F[Engineering Decision Log\nKEEP / REJECT / REVISE / DEFER]
     F --> G[Controlled Experiment Framework\nStrict Zero-Regression Check]
-    G -->|Verified Improvement| H[Production Agent Deployment]
+    G -->|Verified Improvement| H[Optimized Agent Deployment]
 ```
+
+### 3. Pipeline Execution Flow
+
+The runtime decision loop processes inbound customer requests through seven decoupled stages:
+1. **Input Normalization (`src/agent/normalize.py`)**: Strips handle `@mentions`, normalizes whitespace, extracts embedded URLs, and decodes HTML entities.
+2. **Intent Classification (`src/agent/intent.py`)**: Fuses normalized sublinear TF-IDF log-posteriors with discriminative keyword boosters across 10 canonical support intents + 1 fallback intent (`unknown_or_ambiguous`).
+3. **Confidence & Fallback Gate**: Evaluates top-intent posterior confidence ($\ge 0.45$). Sub-threshold or conflicting queries are routed to clarification.
+4. **Context & Entity Extraction (`src/agent/context.py`)**: Extracts Amazon 17-digit order IDs (`\d{3}-\d{7}-\d{7}`), carrier tracking references, and customer sentiment/urgency markers.
+5. **BM25 Knowledge Retrieval (`src/retrieval/bm25.py`)**: Queries indexed canonical Amazon help documentation to ground procedural resolution steps.
+6. **Escalation Routing (`src/agent/agent.py`)**: Evaluates customer frustration markers and repeat deflection risk to route high-severity issues to human support tiers.
+7. **Response Generation & Safety Enforcement (`src/agent/generation.py`, `src/agent/policy.py`)**: Populates canonical support templates and applies zero-tolerance deterministic regex guardrails to block unauthorized financial commitments ("I have refunded $XX") or unverified delivery promises before emission.
 
 ---
 
@@ -105,7 +116,7 @@ The pipeline ingests raw conversations from the Twitter Customer Support (TWCS) 
 1. **Extraction**: Filtered 358,973 AmazonHelp tweets and reconstructed 85,087 parent-child conversational trees.
 2. **Quality Stratification**: Filtered orphan references and categorized conversations into Tier A (complete resolutions), Tier B (clarifications), and Tier C (deflections).
 3. **Brand Profiling**: Compared brands on response latency, volume, and depth, confirming AmazonHelp as the highest-quality candidate.
-4. **Intent Discovery**: Clustered 20,662 resolution pairs to establish the canonical 10-intent taxonomy:
+4. **Intent Discovery**: Clustered 20,662 resolution pairs to establish the canonical support taxonomy of **10 canonical support intents + 1 fallback intent** (`unknown_or_ambiguous`):
    - `delivery_delay`
    - `missing_delivered_package`
    - `damaged_defective_item`
@@ -169,6 +180,12 @@ In Stage 11, a structured 18-category failure diagnosis engine analyzed the 42 i
 
 ## Final Results
 
+The core technical achievement of the agent is the significant performance gain over the strongest baseline (TF-IDF + Naive Bayes):
+- **Intent Accuracy**: Improved from **70.50% to 82.00%** (+11.50% absolute, +16.31% relative).
+- **Macro F1 Score**: Improved from **0.7077 to 0.8204** (+0.1127 absolute, +15.92% relative).
+- **Weighted F1 Score**: Improved from **0.7064 to 0.8185** (+0.1121 absolute, +15.87% relative).
+- **Hard Scenario Resilience**: Improved from **66.67% to 79.55%** (+12.88% absolute) across the 132 complex multi-clause inquiries.
+
 ### Benchmark Comparison Scorecard
 
 | Metric | Stage 8 Baseline (Best) | Stage 9 Initial Agent | Final Optimized Agent | Abs. Improvement vs Baseline | Rel. Improvement vs Baseline |
@@ -181,8 +198,8 @@ In Stage 11, a structured 18-category failure diagnosis engine analyzed the 42 i
 | **Hard Difficulty Acc.** | 66.67% | 75.00% | **79.55%** | **+12.88%** | **+19.32%** |
 | **Guidance Adherence** | 79.50% | 90.00% | **90.50%** | **+11.00%** | **+13.84%** |
 | **Policy Safety Rate** | 100.00% | 100.00% | **100.00%** | **+0.00%** | 🛡️ **Zero Regressions** |
-| **Mean Latency** | 0.093 ms | 3.525 ms | **3.479 ms** | +3.386 ms | ⚡ **< 4ms** |
-| **P95 Latency** | 0.150 ms | 7.995 ms | **7.850 ms** | +7.700 ms | ⚡ **< 8ms** |
+| **Mean Latency** | 0.093 ms | 3.525 ms | **3.49 ms** | +3.40 ms | ⚡ **~3.5 ms** |
+| **P95 Latency** | 0.150 ms | 7.995 ms | **7.85 ms** | +7.70 ms | ⚡ **< 8 ms** |
 
 ---
 
@@ -280,28 +297,45 @@ OPENAI_API_KEY=your_key_here python -m src.evaluation.llm_judge --live
 
 ## Golden Evaluation Set & Judge Agreement (Stage 15)
 
-To address the core evaluation requirements from Hiver:
-1. **150–250 Example Golden Set**: Exactly **200 examples** (`data/golden/golden_evaluation_set.jsonl`), validated via `src/evaluation/validate_golden_set.py`.
-2. **Sampling Methodology**: Quota-based stratified sampling (`RANDOM_SEED = 42`) across 10 canonical support intents (18 examples each = 180) plus 20 out-of-scope/ambiguous queries (`unknown_or_ambiguous`), drawn strictly from the held-out test split (`data/processed/splits/test/`) with zero training/validation leakage. Includes 132 Hard, 41 Medium, and 27 Easy queries.
-3. **Labeling Methodology & Human-Review Status**:
-   - **Intent Labels**: Originally drafted programmatically via regex rules (`src/intents/label_dataset.py`), then **100% manually reviewed and hand-verified** by human inspection across all 200 items using `scripts/review_golden_set.py`.
-   - **Compliance Status**: **Fully Compliant**. Satisfies Hiver's requirement for a 150–250 example hand-labelled golden evaluation set with 0 pending examples.
-   - **Review Manifest**: The 200-row manifest (`data/golden/golden_human_review_manifest.csv`) preserves the complete ground truth with status `VERIFIED`.
-4. **LLM Judge Calibration Study ($N = 35$) — PARTIAL / CALIBRATION EVIDENCE**:
-   - Evaluated on a representative 35-dialogue subset across all 11 intents using the 4-criterion rubric (Helpfulness, Grounding, Actionability, Clarity).
-   - **Grounding Exact Agreement**: **100.0%** ($MAD = 0.000, r = 1.000$) — Zero divergence on policy safety.
-   - **Helpfulness Exact Agreement**: **88.6%** ($\pm 1$ Adjacent: **100.0%**, $MAD = 0.114, r = 0.940$).
-   - **Actionability Exact Agreement**: **82.9%** ($\pm 1$ Adjacent: **100.0%**, $MAD = 0.171, r = 0.874$).
-   - **Clarity Exact Agreement**: **100.0%** ($\pm 1$ Adjacent: **100.0%**, $MAD = 0.000, r = 1.000$).
-   - **Overall Exact Agreement**: **82.9%** ($\pm 1$ Adjacent: **100.0%**, $MAD = 0.086, r = 0.985$).
-   - **Pass/Fail Agreement**: **85.7%** (30/35), **Cohen's Kappa $\kappa = 0.5882$** (moderate-to-substantial agreement).
-   - **Critical Evaluation Caveat & Limitation**:
-     - The $N = 35$ study is an **exploratory single-annotator calibration study** (`reports/stage15/study_annotations.csv`).
-     - The reported 85.7% pass/fail agreement and kappa are drawn exclusively from this preliminary calibration artifact.
-     - This is **NOT** presented as definitive multi-rater human-vs-LLM agreement validation.
-     - The separate 50-example external rater template (`data/golden/human_judge_annotations.csv`) remains intentionally unpopulated to avoid fabricated annotations.
-     - **Hiver Requirement Status**: **PARTIAL / CALIBRATION EVIDENCE** (known evaluation limitation; independent multi-annotator validation is planned for future work).
-   - **Full Stage 15 Report**: See [`reports/stage15/golden_set_and_judge_agreement.md`](reports/stage15/golden_set_and_judge_agreement.md).
+To address the core evaluation requirements from Hiver, the evaluation set and judge calibration were structured into five auditable pillars:
+
+### 1. Dataset Construction
+- Exactly **200 examples** (`data/golden/golden_evaluation_set.jsonl`), validated via `src/evaluation/validate_golden_set.py`.
+- Formatted with customer inquiry text, canonical golden intent labels, difficulty stratification tags, and ground-truth resolution guidance.
+
+### 2. Quota-Based Stratified Sampling
+- Stratified sampling (`RANDOM_SEED = 42`) across **10 canonical support intents** (18 examples each = 180) plus 20 out-of-scope/ambiguous queries (`unknown_or_ambiguous`).
+- Drawn strictly from the held-out test split (`data/processed/splits/test/`) with zero training or validation split leakage.
+- Stratified across realistic real-world complexity: **132 Hard**, **41 Medium**, and **27 Easy** inquiries.
+
+### 3. Manual Human Verification
+- Intent labels were originally drafted programmatically via regex rules (`src/intents/label_dataset.py`), and then **100% manually reviewed and hand-verified** by human inspection across all 200 items using `scripts/review_golden_set.py`.
+- **Review Manifest**: The 200-row manifest (`data/golden/golden_human_review_manifest.csv`) records the ground truth with 0 pending reviews (156 confirmed / 78.0%, 44 corrected / 22.0%).
+- **Compliance Status**: Satisfies Hiver's requirement for a 150–250 example hand-labelled golden evaluation set.
+
+### 4. LLM Judge Agreement Calibration ($N = 35$) — PARTIAL / CALIBRATION EVIDENCE
+- Evaluated on a representative 35-dialogue subset across all 11 intents using the 4-criterion rubric (Helpfulness, Grounding, Actionability, Clarity):
+  - **Grounding Exact Agreement**: **100.0%** ($MAD = 0.000, r = 1.000$) — Zero divergence on policy safety.
+  - **Helpfulness Exact Agreement**: **88.6%** ($\pm 1$ Adjacent: **100.0%**, $MAD = 0.114, r = 0.940$).
+  - **Actionability Exact Agreement**: **82.9%** ($\pm 1$ Adjacent: **100.0%**, $MAD = 0.171, r = 0.874$).
+  - **Clarity Exact Agreement**: **100.0%** ($\pm 1$ Adjacent: **100.0%**, $MAD = 0.000, r = 1.000$).
+  - **Overall Exact Agreement**: **82.9%** ($\pm 1$ Adjacent: **100.0%**, $MAD = 0.086, r = 0.985$).
+  - **Pass/Fail Agreement**: **85.7%** (30/35), **Cohen's Kappa $\kappa = 0.5882$** (moderate-to-substantial agreement).
+- **Critical Evaluation Caveat & Limitation**:
+  - The $N = 35$ study is an **exploratory single-annotator calibration study** (`reports/stage15/study_annotations.csv`).
+  - The reported 85.7% pass/fail agreement and kappa are drawn exclusively from this preliminary calibration artifact.
+  - This is **NOT** presented as definitive multi-rater human-vs-LLM agreement validation.
+  - The separate 50-example external rater template (`data/golden/human_judge_annotations.csv`) remains intentionally unpopulated to avoid fabricated annotations.
+  - **Hiver Requirement Status**: **PARTIAL / CALIBRATION EVIDENCE** (known evaluation limitation; independent multi-annotator validation is planned for future work).
+- **Full Stage 15 Report**: See [`reports/stage15/golden_set_and_judge_agreement.md`](reports/stage15/golden_set_and_judge_agreement.md).
+
+### 5. Integrity Guarantees & Verification
+- Automated validation via `python src/evaluation/validate_golden_set.py` asserts:
+  - Exact count of 200 records.
+  - Exact schema conformance across all fields.
+  - Zero ID collision or duplication.
+  - Zero text or dialogue overlap with training splits.
+  - SHA-256 manifest hash verification on every test run.
 
 ---
 
@@ -330,13 +364,13 @@ The comprehensive submission report for Hiver evaluators is located at:
 👉 **[reports/final_report.md](reports/final_report.md)**
 
 ### Key Highlights
-- **Golden Evaluation Set**: Exactly **200 examples** sampled from held-out `AmazonHelp` customer support dialogues, **100% human-verified** across an 11-intent taxonomy (156 confirmed, 44 corrected from initial heuristic labels).
+- **Golden Evaluation Set**: Exactly **200 examples** sampled from held-out `AmazonHelp` customer support dialogues, **100% human-verified** across **10 canonical support intents + 1 fallback intent** (156 confirmed, 44 corrected from initial heuristic labels).
 - **Headline Results**:
   - **Intent Classification Accuracy**: **82.00%** (95% CI: [76.5%, 87.5%]), Macro F1: **0.8204** (vs. 9.00% trivial baseline and 70.50% / 0.7077 TF-IDF baseline).
   - **Hard-Scenario Resilience**: **79.55%** on 132 complex multi-clause inquiries (+12.88% over simple baseline).
-  - **Policy Safety Rate**: **100.00%** (0 violations; deterministic guardrails prevent unauthorized financial commitments or fake dates).
+  - **Policy Safety Rate**: **100.00%** (0 policy violations on N=200; deterministic guardrails prevent unauthorized financial commitments or unverified claims).
   - **Guidance Adherence**: **90.50%** adherence to official Amazon customer service action protocols.
-  - **Inference Latency**: **3.49 ms** mean / **7.85 ms** P95 (sub-4ms real-time CPU triage).
+  - **Inference Latency**: **3.49 ms** mean / **7.85 ms** P95 (approximately 3.5 ms mean on standard CPU).
 - **Major Limitation**: The system operates on **single-turn inbound inquiry triage**. Multi-turn dialogues requiring interactive entity collection (such as soliciting an order ID and awaiting customer reply) require an external session state machine.
 - **Reproducibility Instructions**: Headline evaluation results can be reproduced offline on a clean machine in **< 15 minutes** (typically under 1 minute) without external API keys:
   ```bash
@@ -349,7 +383,7 @@ The comprehensive submission report for Hiver evaluators is located at:
 
 | # | Hiver Assignment Requirement | Repository Evidence & Location | Audit Status |
 | :-: | :--- | :--- | :---: |
-| 1 | **Small, clear intent taxonomy** | 10 canonical intents + 1 fallback in `data/intent_taxonomy.json` | **COMPLIANT** |
+| 1 | **Small, clear intent taxonomy** | 10 canonical support intents + 1 fallback intent in `data/intent_taxonomy.json` | **COMPLIANT** |
 | 2 | **Historically grounded responses** | BM25 retrieval + policy templates in `src/agent/generation.py` (90.50% adherence) | **COMPLIANT** |
 | 3 | **Auto-handle vs. escalate decision** | Frustration scoring & risk triggers in `src/agent/agent.py` (10.50% escalation) | **COMPLIANT** |
 | 4 | **150–250 hand-labelled golden examples** | Exactly 200 examples; 100% human-verified in `data/golden/golden_human_review_manifest.csv` | **COMPLIANT** |
@@ -373,7 +407,7 @@ The comprehensive submission report for Hiver evaluators is located at:
 
 ## Policy & Safety Guardrails
 
-The agent enforces strict enterprise support policies:
+The agent enforces strict deterministic customer support policies:
 - **No Fabricated Actions**: Zero tolerance for unauthorized promises ("I have issued a refund of $50" or "I cancelled your order").
 - **No Invented Tracking Information**: Directs users strictly to authenticated self-service tracking URLs.
 - **No Insecure PII Requests**: Explicitly forbids requesting credit card numbers, CVVs, or passwords on public channels.
@@ -381,7 +415,7 @@ The agent enforces strict enterprise support policies:
 
 ---
 
-## Reproduce Headline Results (< 15 Minutes)
+## Reproduce Headline Results (Under 15 Minutes)
 
 This repository strictly fulfills the Hiver assignment requirement:
 > *"README must let us reproduce headline results in under 15 minutes."*
@@ -440,7 +474,7 @@ The runner produces the executive summary table and writes structured artifacts 
 
 ```text
 =======================================================
-STAGE 10 EVALUATION HARNESS SUMMARY
+FINAL EVALUATION HARNESS SUMMARY
 =======================================================
 Overall Accuracy       : 82.00% (95% CI: [76.50%, 87.50%])
 Macro F1               : 0.8204
@@ -449,7 +483,8 @@ Hard Difficulty Acc    : 79.55%
 Guidance Adherence     : 90.50%
 Policy Safety Rate     : 100.00%
 Escalation Rate        : 10.50%
-Mean Latency           : 3.18 ms
+Mean Latency           : 3.49 ms
+P95 Latency            : 7.85 ms
 Regression Check       : PASS
 =======================================================
 ```
@@ -460,15 +495,15 @@ Regression Check       : PASS
 | **Macro F1** | **0.8204** | 0.7077 | **+0.1127** |
 | **Hard Difficulty Accuracy** | **79.55%** | 66.67% | **+12.88%** |
 | **Guidance Adherence Rate** | **90.50%** | 79.50% | **+11.00%** |
-| **Policy Safety Rate** | **100.00%** | 100.00% | **Zero Hallucinations** |
-| **Mean Inference Latency** | **~3.5 ms** | 0.093 ms | Real-time SLA (< 5 ms) |
+| **Policy Safety Rate** | **100.00%** | 100.00% | **0 policy violations on N=200** |
+| **Inference Latency** | **3.49 ms mean / 7.85 ms P95** | 0.093 ms mean | Approximately 3.5 ms mean SLA |
 
 ### 9. Verify the Full Test Suite
 Run the 144-test automated test suite spanning Stages 5 through 17:
 ```bash
 python -m unittest discover tests
 ```
-*Expected: `Ran 144 tests in ~2.4s — OK`*
+*Expected: `Ran 144 tests — OK`*
 
 ### 10. Run the Stage 13 LLM-as-Judge & Interactive Demo (Optional)
 ```bash
@@ -483,20 +518,30 @@ python -m src.agent.cli --demo
 
 ## Interactive CLI Demo
 
-The agent includes an interactive terminal interface with structured decision metadata:
+The agent includes an interactive terminal interface designed for inspecting runtime decision metadata on synthetic test queries across all pipeline stages:
+- **Primary & Secondary Intent Classification** with confidence scoring
+- **Context & Entity Extraction** (order IDs, tracking numbers, customer sentiment)
+- **BM25 Evidence Retrieval** from canonical support guidelines
+- **Deterministic Policy Safety Verification**
+- **Escalation Routing** (automated resolution vs. human agent handoff)
+- **End-to-End Latency Measurement**
+- **Final Grounded Response Formulation**
+
+> [!NOTE]
+> The scenarios below represent synthetic test demonstrations designed to inspect agent decision metadata; they do not reflect live Amazon customer records or production services.
 
 ```bash
 # Run the automated 6-scenario demonstration suite
 python -m src.agent.cli --demo
 
-# Run with a single custom query
+# Run with a single synthetic test query
 python -m src.agent.cli "My package was supposed to arrive yesterday but tracking hasn't updated. Where is it?"
 
-# Launch interactive chat mode
+# Launch interactive test mode
 python -m src.agent.cli
 ```
 
-### Sample Demonstration Output
+### Sample Demonstration Output (Synthetic Test Query)
 
 ```text
 ----------------------------------------
@@ -512,7 +557,7 @@ Context:            {'order_id': None, 'product_reference': None, 'carrier_refer
 Retrieved evidence: 3 reference chunk(s) retrieved from knowledge base
 Policy status:      Passed (Compliant with customer support standards)
 Escalation:         Resolved via automated guidance
-Latency:            3.48 ms
+Latency:            3.49 ms
 
 AGENT RESPONSE:
 "Thanks for reaching out to Amazon Customer Support. We understand your shipment is delayed. You can check real-time tracking updates directly in 'Your Orders' at <URL>. If you have your order ID handy, please share it with us via secure message so we can investigate."
@@ -532,7 +577,7 @@ amazonhelp-support-agent/
 ├── .gitignore                          # Standard Python & cache exclusions
 │
 ├── src/
-│   ├── agent/                          # Production AI Support Agent
+│   ├── agent/                          # AI Support Agent
 │   │   ├── agent.py                    # Orchestration pipeline & escalation
 │   │   ├── cli.py                      # Interactive terminal & synthetic demo suite
 │   │   ├── config.py                   # Agent thresholds & configuration
@@ -570,14 +615,14 @@ amazonhelp-support-agent/
 │   │
 │   ├── intents/                        # Stage 6 Intent Discovery & Taxonomy
 │   │   ├── discover_intents.py         # N-gram co-occurrence & clustering
-│   │   └── taxonomy.py                 # Canonical 10-intent taxonomy definition
+│   │   └── taxonomy.py                 # Canonical intent taxonomy (10 canonical + 1 fallback)
 │   │
 │   └── retrieval/                      # Stage 8/9 Knowledge Base & BM25
 │       └── bm25.py                     # Okapi BM25 indexing and scoring
 │
 ├── data/                               # Structured Data Store
 │   ├── golden/                         # Protected Golden Set (N=200, 100% human-verified)
-│   ├── intent_taxonomy.json            # Machine-readable 10-intent taxonomy
+│   ├── intent_taxonomy.json            # Machine-readable taxonomy (10 canonical + 1 fallback)
 │   ├── selected_brand.json             # Brand selection artifact (AmazonHelp)
 │   └── training_sample.jsonl.gz        # Reproducibility training subset (25,000 interactions)
 │
@@ -617,13 +662,13 @@ The test suite enforces full test coverage across all stages:
 $ python -m unittest discover tests
 ................................................................................................................................................
 ----------------------------------------------------------------------
-Ran 144 tests in 2.340s
+Ran 144 tests — OK
 
 OK
 ```
 
-- **Zero-Leakage Assurance**: Verified that 0 Golden Set conversations overlap with training data.
-- **Immutability Guarantee**: Golden Set SHA-256 hash verified against manifest on every test run.
+- **Zero-Leakage Verification**: Verified that 0 Golden Set conversations overlap with training data.
+- **Integrity Verification**: Golden Set SHA-256 hash verified against manifest on every test run.
 - **Offline Reproducibility**: 100% of tests run without external APIs or network calls.
 
 ---
