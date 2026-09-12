@@ -1,0 +1,293 @@
+{
+  "total_failures": 42,
+  "total_evaluated": 200,
+  "overall_failure_rate": 0.21,
+  "category_ranking": [
+    {
+      "category": "intent_confusion",
+      "count": 18,
+      "rate": 0.09
+    },
+    {
+      "category": "multi_intent_failure",
+      "count": 15,
+      "rate": 0.075
+    },
+    {
+      "category": "ambiguous_input",
+      "count": 9,
+      "rate": 0.045
+    }
+  ],
+  "weakest_intents": [
+    {
+      "intent": "order_cancellation",
+      "failure_count": 10
+    },
+    {
+      "intent": "unknown_or_ambiguous",
+      "failure_count": 9
+    },
+    {
+      "intent": "delivery_delay",
+      "failure_count": 7
+    },
+    {
+      "intent": "returns_and_refunds",
+      "failure_count": 5
+    },
+    {
+      "intent": "payment_and_billing",
+      "failure_count": 3
+    },
+    {
+      "intent": "digital_services_technical",
+      "failure_count": 3
+    },
+    {
+      "intent": "account_access_security",
+      "failure_count": 2
+    },
+    {
+      "intent": "service_complaint_escalation",
+      "failure_count": 2
+    },
+    {
+      "intent": "damaged_defective_item",
+      "failure_count": 1
+    }
+  ],
+  "top_confusion_pairs": [
+    {
+      "gold_intent": "order_cancellation",
+      "predicted_intent": "prime_membership",
+      "count": 5
+    },
+    {
+      "gold_intent": "delivery_delay",
+      "predicted_intent": "missing_delivered_package",
+      "count": 3
+    },
+    {
+      "gold_intent": "delivery_delay",
+      "predicted_intent": "prime_membership",
+      "count": 2
+    },
+    {
+      "gold_intent": "returns_and_refunds",
+      "predicted_intent": "delivery_delay",
+      "count": 2
+    },
+    {
+      "gold_intent": "order_cancellation",
+      "predicted_intent": "delivery_delay",
+      "count": 2
+    },
+    {
+      "gold_intent": "payment_and_billing",
+      "predicted_intent": "returns_and_refunds",
+      "count": 2
+    },
+    {
+      "gold_intent": "account_access_security",
+      "predicted_intent": "unknown_or_ambiguous",
+      "count": 2
+    },
+    {
+      "gold_intent": "digital_services_technical",
+      "predicted_intent": "delivery_delay",
+      "count": 2
+    },
+    {
+      "gold_intent": "unknown_or_ambiguous",
+      "predicted_intent": "returns_and_refunds",
+      "count": 2
+    },
+    {
+      "gold_intent": "unknown_or_ambiguous",
+      "predicted_intent": "damaged_defective_item",
+      "count": 2
+    }
+  ],
+  "difficulty_breakdown": {
+    "medium": 6,
+    "hard": 33,
+    "easy": 3
+  },
+  "severity_breakdown": {
+    "high": 33,
+    "medium": 9
+  },
+  "component_breakdown": [
+    {
+      "component": "intent classifier",
+      "failure_count": 42,
+      "percentage": 100.0
+    }
+  ],
+  "high_confidence_errors": {
+    "count": 37,
+    "rate": 0.185,
+    "percentage_of_failures": 88.1,
+    "affected_intents": {
+      "delivery_delay": 7,
+      "returns_and_refunds": 5,
+      "order_cancellation": 7,
+      "payment_and_billing": 3,
+      "account_access_security": 2,
+      "digital_services_technical": 3,
+      "service_complaint_escalation": 2,
+      "unknown_or_ambiguous": 8
+    },
+    "sample_examples": [
+      {
+        "example_id": "golden_003",
+        "gold_intent": "delivery_delay",
+        "predicted_intent": "missing_delivered_package",
+        "confidence": 0.95,
+        "message_snippet": "Trying to get free standard locker delivery to my office building but it's not o",
+        "root_cause": "High-weight lexical trigger ('not received' / 'missing') triggered missing package rule on an inquiry that only asked about delayed tracking."
+      },
+      {
+        "example_id": "golden_004",
+        "gold_intent": "delivery_delay",
+        "predicted_intent": "missing_delivered_package",
+        "confidence": 0.95,
+        "message_snippet": "Just wondering if you think this looks like a secure delivery, considering I hav",
+        "root_cause": "High-weight lexical trigger ('not received' / 'missing') triggered missing package rule on an inquiry that only asked about delayed tracking."
+      },
+      {
+        "example_id": "golden_010",
+        "gold_intent": "delivery_delay",
+        "predicted_intent": "prime_membership",
+        "confidence": 0.95,
+        "message_snippet": "Hey Amazon, I'm new to this online shopping thing. Is there a difference between",
+        "root_cause": "Compound customer request triggers multiple high-weight lexical rules simultaneously."
+      },
+      {
+        "example_id": "golden_012",
+        "gold_intent": "delivery_delay",
+        "predicted_intent": "digital_services_technical",
+        "confidence": 0.95,
+        "message_snippet": "trying to place an order via pantry and use code PANTRY10 as its my first order.",
+        "root_cause": "Overlapping TF-IDF term weights between 'delivery_delay' and 'digital_services_technical'."
+      },
+      {
+        "example_id": "golden_014",
+        "gold_intent": "delivery_delay",
+        "predicted_intent": "missing_delivered_package",
+        "confidence": 0.95,
+        "message_snippet": "Did not receive my package again 🤬",
+        "root_cause": "High-weight lexical trigger ('not received' / 'missing') triggered missing package rule on an inquiry that only asked about delayed tracking."
+      }
+    ]
+  },
+  "failure_clusters": [
+    {
+      "cluster_id": "CLUSTER_A",
+      "name": "Delivery Delay vs Missing Delivered Package Confusion",
+      "size": 3,
+      "severity": "high",
+      "description": "Customer queries reporting delayed shipping or tracking questions misclassified as lost/missing delivered packages due to aggressive lexical triggers ('not received', 'missing').",
+      "examples": [
+        "golden_003",
+        "golden_004",
+        "golden_014"
+      ]
+    },
+    {
+      "cluster_id": "CLUSTER_B",
+      "name": "Order Cancellation Masked by Secondary Entity Mentions",
+      "size": 6,
+      "severity": "high",
+      "description": "Inquiries seeking order or subscription cancellation where customer mentions 'prime' or 'refund', causing entity keyword boosts to eclipse the core cancellation intent.",
+      "examples": [
+        "golden_074",
+        "golden_077",
+        "golden_078",
+        "golden_080",
+        "golden_082"
+      ]
+    },
+    {
+      "cluster_id": "CLUSTER_C",
+      "name": "Compound Multi-Intent Customer Requests",
+      "size": 9,
+      "severity": "high",
+      "description": "Customer messages expressing two valid intents simultaneously (e.g. late delivery + subscription complaint), resulting in single-intent misclassification.",
+      "examples": [
+        "golden_010",
+        "golden_017",
+        "golden_039",
+        "golden_041",
+        "golden_044"
+      ]
+    },
+    {
+      "cluster_id": "CLUSTER_D",
+      "name": "Sparse and Ambiguous Input Deflection",
+      "size": 9,
+      "severity": "medium",
+      "description": "Short messages (< 25 characters) or vague complaints lacking explicit entities, causing over-confident pseudo-random intent classification.",
+      "examples": [
+        "golden_182",
+        "golden_184",
+        "golden_187",
+        "golden_188",
+        "golden_191"
+      ]
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "P0",
+      "title": "Strict Guardrails Against Unsupported Operational Commitments",
+      "problem": "Potential customer misinformation if generation templates promise refunds or direct order modifications.",
+      "evidence": "Policy check compliance must remain at 100.00% without regression.",
+      "proposed_solution": "Maintain deterministic zero-tolerance regex guards blocking words like 'I have refunded' or 'I have cancelled' before emission.",
+      "expected_benefit": "Guarantees zero operational liability and prevents customer misinformation.",
+      "risk": "Minimal risk of false positive blocking on valid conversational turns.",
+      "implementation_difficulty": "Low"
+    },
+    {
+      "priority": "P1",
+      "title": "Disambiguate Delivery Delay vs Missing Delivered Package",
+      "problem": "7 instances of tracking/delivery delay inquiries were misclassified as lost packages, recommending irrelevant mailroom searches.",
+      "evidence": "Cluster A accounts for 3 confusion errors; high-confidence error rate is elevated.",
+      "proposed_solution": "Require explicit confirmation of 'marked as delivered' status before firing the 4.5 missing package boost; let delivery_delay handle transit inquiries.",
+      "expected_benefit": "Immediate +2.0% to +3.5% intent accuracy improvement on hard delivery inquiries.",
+      "risk": "May slightly reduce recall for missing package if user says 'not received' without mentioning delivery status.",
+      "implementation_difficulty": "Low"
+    },
+    {
+      "priority": "P1",
+      "title": "Disambiguate Action Verbs over Substantive Entities in Order Cancellation",
+      "problem": "10 order cancellation inquiries were misclassified as Prime Membership or Returns/Refunds due to entity keyword dominance.",
+      "evidence": "Order cancellation has the lowest recall (44.44%) of all intents in the benchmark.",
+      "proposed_solution": "Introduce compound precedence rules giving 'cancel' + 'subscription/order' higher priority than bare 'prime' mentions.",
+      "expected_benefit": "Substantial recovery of order_cancellation recall from 44.44% to > 70.00%.",
+      "risk": "Could misclassify general Prime queries that mention 'how do I cancel if I don't like it' as cancellations.",
+      "implementation_difficulty": "Medium"
+    },
+    {
+      "priority": "P2",
+      "title": "Calibrated Confidence Thresholding for Short/Ambiguous Inquiries",
+      "problem": "Short (< 25 chars) or ambiguous inquiries receive high confidence predictions (~0.90) due to single word token matches.",
+      "evidence": "High-confidence incorrect prediction rate is 18.5%.",
+      "proposed_solution": "Penalize confidence on inputs with token length < 5, routing them to 'unknown_or_ambiguous' clarification.",
+      "expected_benefit": "Reduces high-confidence error rate and improves expected calibration error (ECE).",
+      "risk": "May increase deflection rate on short but legitimate queries.",
+      "implementation_difficulty": "Low"
+    },
+    {
+      "priority": "P3",
+      "title": "Response Template Guidance Polish for Multi-Part Inquiries",
+      "problem": "Guidance adherence drops on compound queries when only the primary issue is addressed.",
+      "evidence": "10% of examples miss one or more guidance criteria on multi-turn context.",
+      "proposed_solution": "Append modular guidance snippets when secondary intents are detected.",
+      "expected_benefit": "Pushes guidance adherence from 90.00% to > 95.00%.",
+      "risk": "Responses may become slightly more verbose.",
+      "implementation_difficulty": "Medium"
+    }
+  ]
+}

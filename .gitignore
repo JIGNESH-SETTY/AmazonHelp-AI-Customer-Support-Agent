@@ -1,0 +1,132 @@
+# Python Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+
+# Python Cache and Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution and Packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing & Coverage
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Local Environment & Secrets
+.env
+.env.local
+*.secret
+*.pem
+*.key
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary & Scratch Files
+scratch/
+tmp/
+temp/
+*.log
+
+# ==========================================
+# LARGE RAW DATASETS
+# ==========================================
+
+data/raw/
+datasets/raw/
+raw_data/
+
+# Large downloaded/source datasets
+*.parquet
+*.feather
+
+# ==========================================
+# GENERATED / TEMPORARY DATA
+# ==========================================
+
+data/tmp/
+data/cache/
+data/intermediate/
+tmp/
+temp/
+scratch/
+
+# Generated outputs
+outputs/
+artifacts/
+cache/
+
+# ==========================================
+# LARGE MODEL / BINARY FILES
+# ==========================================
+
+*.bin
+*.onnx
+*.pt
+*.pth
+*.safetensors
+*.h5
+*.hdf5
+
+# ==========================================
+# JUPYTER
+# ==========================================
+
+.ipynb_checkpoints/
+
+# ==========================================
+# FRONTEND DEPENDENCIES / BUILD OUTPUT
+# ==========================================
+
+node_modules/
+.next/
+coverage/
+
+# ==========================================
+# LARGE ARCHIVES
+# ==========================================
+
+*.zip
+*.tar
+*.gz
+*.7z
+*.rar
+# ==========================================
+# LARGE PROCESSED DATASETS
+# ==========================================
+
+data/processed/

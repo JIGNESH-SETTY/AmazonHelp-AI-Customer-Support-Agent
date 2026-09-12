@@ -1,0 +1,140 @@
+{
+  "stage": 9,
+  "name": "Stage 9 AI Support Agent Benchmark Results",
+  "benchmark_dataset": "Stage 7 Golden Evaluation Set (200 examples)",
+  "training_samples_fitted": 25000,
+  "timestamp": "2026-09-12 07:15:00 UTC",
+  "complete_agent_metrics": {
+    "intent_classification": {
+      "accuracy": 0.79,
+      "macro_precision": 0.8059,
+      "macro_recall": 0.7924,
+      "macro_f1": 0.7846,
+      "weighted_f1": 0.7831,
+      "per_class": {
+        "account_access_security": {
+          "support": 18,
+          "precision": 0.8889,
+          "recall": 0.8889,
+          "f1": 0.8889
+        },
+        "damaged_defective_item": {
+          "support": 18,
+          "precision": 0.85,
+          "recall": 0.9444,
+          "f1": 0.8947
+        },
+        "delivery_delay": {
+          "support": 18,
+          "precision": 0.5789,
+          "recall": 0.6111,
+          "f1": 0.5946
+        },
+        "digital_services_technical": {
+          "support": 18,
+          "precision": 0.8824,
+          "recall": 0.8333,
+          "f1": 0.8571
+        },
+        "missing_delivered_package": {
+          "support": 18,
+          "precision": 0.8182,
+          "recall": 1.0,
+          "f1": 0.9
+        },
+        "order_cancellation": {
+          "support": 18,
+          "precision": 1.0,
+          "recall": 0.4444,
+          "f1": 0.6154
+        },
+        "payment_and_billing": {
+          "support": 18,
+          "precision": 0.8333,
+          "recall": 0.8333,
+          "f1": 0.8333
+        },
+        "prime_membership": {
+          "support": 18,
+          "precision": 0.72,
+          "recall": 1.0,
+          "f1": 0.8372
+        },
+        "returns_and_refunds": {
+          "support": 18,
+          "precision": 0.619,
+          "recall": 0.7222,
+          "f1": 0.6667
+        },
+        "service_complaint_escalation": {
+          "support": 18,
+          "precision": 0.9412,
+          "recall": 0.8889,
+          "f1": 0.9143
+        },
+        "unknown_or_ambiguous": {
+          "support": 20,
+          "precision": 0.7333,
+          "recall": 0.55,
+          "f1": 0.6286
+        }
+      },
+      "latency_ms": 3.707,
+      "accuracy_by_difficulty": {
+        "easy": 0.8889,
+        "medium": 0.8537,
+        "hard": 0.75
+      }
+    },
+    "response_generation": {
+      "rouge_1": 0.155,
+      "rouge_2": 0.016,
+      "rouge_l": 0.1105,
+      "bleu_1": 0.1168,
+      "bleu_2": 0.0255,
+      "guidance_adherence_rate": 0.9,
+      "policy_safety_pass_rate": 1.0,
+      "escalation_rate": 0.1,
+      "latency_ms": 3.707
+    }
+  },
+  "ablation_study": {
+    "config_a_intent_only": {
+      "intent_accuracy": 0.79,
+      "guidance_adherence": 0.9,
+      "policy_safety_pass_rate": 1.0,
+      "description": "Base hybrid intent classification with generic templates; no retrieval or policy."
+    },
+    "config_b_intent_plus_retrieval": {
+      "intent_accuracy": 0.79,
+      "guidance_adherence": 0.9,
+      "policy_safety_pass_rate": 1.0,
+      "description": "Intent classification augmented with BM25 historical context evidence."
+    },
+    "config_c_intent_retrieval_policy": {
+      "intent_accuracy": 0.79,
+      "guidance_adherence": 0.9,
+      "policy_safety_pass_rate": 1.0,
+      "description": "Intent + BM25 retrieval + Policy safety guardrails."
+    },
+    "config_d_complete_agent": {
+      "intent_accuracy": 0.79,
+      "guidance_adherence": 0.9,
+      "policy_safety_pass_rate": 1.0,
+      "description": "Full modular agent: Hybrid Intent + Entity Context + BM25 Retrieval + Policy Guardrails + Dynamic Grounded Generation."
+    }
+  },
+  "baseline_comparison": {
+    "top_stage8_intent_model": "tfidf_naive_bayes",
+    "stage8_accuracy": 0.705,
+    "stage8_macro_f1": 0.7077,
+    "stage8_hard_acc": 0.6667,
+    "stage9_accuracy": 0.79,
+    "stage9_macro_f1": 0.7846,
+    "stage9_hard_acc": 0.75,
+    "accuracy_delta": 0.085,
+    "stage8_top_guidance": 0.795,
+    "stage9_guidance": 0.9,
+    "guidance_delta": 0.105
+  }
+}

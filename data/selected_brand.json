@@ -1,0 +1,15 @@
+{
+  "stage": 5,
+  "selected_brand": "AmazonHelp",
+  "selection_date": "2026-09-12 06:21:22 UTC",
+  "selection_method": "Stage 5 quantitative brand profiling and multi-criteria scoring",
+  "composite_score": 0.8043,
+  "conversation_count": 82467,
+  "tweet_count": 373057,
+  "english_percentage": 73.38,
+  "resolution_percentage": 15.42,
+  "escalation_percentage": 37.6,
+  "multiturn_percentage": 62.06,
+  "diversity_proxy": 0.8549,
+  "reason": "Brand 'AmazonHelp' achieved the highest composite score (0.8043) across all 108 evaluated brands. It provides the largest conversation volume (82,467 conversations, 373,057 tweets), outstanding conversational depth (62.1% multi-turn), highest domain & intent diversity proxy (0.8549), substantial resolution corpus (26,222 substantive resolutions), and balanced escalation behavior (37.6%)."
+}

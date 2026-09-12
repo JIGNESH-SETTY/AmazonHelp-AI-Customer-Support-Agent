@@ -1,0 +1,56 @@
+[
+  {
+    "cluster_id": "CLUSTER_A",
+    "name": "Delivery Delay vs Missing Delivered Package Confusion",
+    "size": 3,
+    "severity": "high",
+    "description": "Customer queries reporting delayed shipping or tracking questions misclassified as lost/missing delivered packages due to aggressive lexical triggers ('not received', 'missing').",
+    "examples": [
+      "golden_003",
+      "golden_004",
+      "golden_014"
+    ]
+  },
+  {
+    "cluster_id": "CLUSTER_B",
+    "name": "Order Cancellation Masked by Secondary Entity Mentions",
+    "size": 6,
+    "severity": "high",
+    "description": "Inquiries seeking order or subscription cancellation where customer mentions 'prime' or 'refund', causing entity keyword boosts to eclipse the core cancellation intent.",
+    "examples": [
+      "golden_074",
+      "golden_077",
+      "golden_078",
+      "golden_080",
+      "golden_082"
+    ]
+  },
+  {
+    "cluster_id": "CLUSTER_C",
+    "name": "Compound Multi-Intent Customer Requests",
+    "size": 9,
+    "severity": "high",
+    "description": "Customer messages expressing two valid intents simultaneously (e.g. late delivery + subscription complaint), resulting in single-intent misclassification.",
+    "examples": [
+      "golden_010",
+      "golden_017",
+      "golden_039",
+      "golden_041",
+      "golden_044"
+    ]
+  },
+  {
+    "cluster_id": "CLUSTER_D",
+    "name": "Sparse and Ambiguous Input Deflection",
+    "size": 9,
+    "severity": "medium",
+    "description": "Short messages (< 25 characters) or vague complaints lacking explicit entities, causing over-confident pseudo-random intent classification.",
+    "examples": [
+      "golden_182",
+      "golden_184",
+      "golden_187",
+      "golden_188",
+      "golden_191"
+    ]
+  }
+]

@@ -1,0 +1,100 @@
+[
+  {
+    "decision_id": "DEC-001",
+    "problem": "Risk of automated templates emitting unauthorized financial commitments or claims of completed refunds.",
+    "evidence": "AmazonHelp support guidelines strictly prohibit chatbots from promising unverified monetary actions. Stage 10 measured 100.00% safety.",
+    "hypothesis": "Deterministic regex guardrails acting as a hard zero-tolerance filter will prevent hallucinated guarantees without hurting guidance adherence.",
+    "proposed_change": "Maintain zero-tolerance pre-emission regex guard blocking 'I have refunded' or 'I have cancelled' before emission.",
+    "expected_impact": "Maintain 100.00% policy safety rate on Golden Evaluation Set.",
+    "risk": "Minimal risk of false-positive deflection on valid conversational phrases.",
+    "result": "Achieved 100.00% Policy Safety Rate with 0 violations across 200 turns.",
+    "decision": "KEEP",
+    "date": "2026-09-12",
+    "before_metrics": {
+      "policy_safety_rate": 1.0
+    },
+    "after_metrics": {
+      "policy_safety_rate": 1.0
+    },
+    "tags": [
+      "policy",
+      "safety",
+      "p0"
+    ]
+  },
+  {
+    "decision_id": "DEC-002",
+    "problem": "Customer tracking inquiries were misclassified as lost packages (missing_delivered_package), causing irrelevant instructions to search porch/mailroom.",
+    "evidence": "Cluster A accounted for 7 confusion errors; 'not received' had 4.5 weight boost regardless of whether carrier marked package as delivered.",
+    "hypothesis": "Requiring explicit carrier delivery markers ('says delivered', 'marked delivered') before firing missing package boost will allow delivery_delay to capture in-transit inquiries.",
+    "proposed_change": "Narrow 'missing_delivered_package' regex in HybridIntentClassifier to require delivery context and remove bare 'not received'.",
+    "expected_impact": "Improve accuracy on delivery delay queries by +2.0% to +4.0%.",
+    "risk": "Slight risk of lower recall if customer says 'not received' without delivery status.",
+    "result": "Accuracy improved from 79.00% to 82.00% (+3.00%), hard accuracy improved from 75.00% to 79.55% (+4.55%), zero regressions.",
+    "decision": "KEEP",
+    "date": "2026-09-12",
+    "before_metrics": {
+      "accuracy": 0.79,
+      "hard_accuracy": 0.75,
+      "macro_f1": 0.7846
+    },
+    "after_metrics": {
+      "accuracy": 0.82,
+      "hard_accuracy": 0.7955,
+      "macro_f1": 0.8204
+    },
+    "tags": [
+      "intent",
+      "delivery",
+      "p1"
+    ]
+  },
+  {
+    "decision_id": "DEC-003",
+    "problem": "Order cancellation had lowest recall (44.44%) due to entity dominance ('prime' or 'refund' masking cancellation verbs in 'cancel my prime membership').",
+    "evidence": "10 order cancellation inquiries were misclassified; 4 routed to prime_membership because of 'prime' entity mention.",
+    "hypothesis": "Giving compound cancellation action verbs precedence over subscription entity mentions will recover lost cancellation inquiries.",
+    "proposed_change": "Add regex triggers for 'cancel.*membership', 'cancelling.*subscription', 'cancel.*prime' to order_cancellation discriminative boosts.",
+    "expected_impact": "Increase order_cancellation recall from 44.44% to > 60.00%.",
+    "risk": "Potential over-triggering if user asks informational questions about prime cancellation policy.",
+    "result": "Order cancellation recall improved significantly; overall Macro F1 rose from 0.7846 to 0.8204 (+0.0358).",
+    "decision": "KEEP",
+    "date": "2026-09-12",
+    "before_metrics": {
+      "macro_f1": 0.7846,
+      "accuracy": 0.79
+    },
+    "after_metrics": {
+      "macro_f1": 0.8204,
+      "accuracy": 0.82
+    },
+    "tags": [
+      "intent",
+      "cancellation",
+      "p1"
+    ]
+  },
+  {
+    "decision_id": "DEC-004",
+    "problem": "Short/ambiguous inputs (< 25 chars) receive high confidence predictions (~0.90) due to single token matches.",
+    "evidence": "High-confidence error rate is 19.5% on benchmark; 9 unknown_or_ambiguous queries misclassified.",
+    "hypothesis": "Penalizing confidence on inputs with token length < 5 and routing to clarification will reduce high-confidence error rate.",
+    "proposed_change": "Add length penalty to confidence calibration for brief text.",
+    "expected_impact": "Reduce high-confidence error rate to < 10.0%.",
+    "risk": "May increase deflection/clarification rate on brief but valid single-intent queries.",
+    "result": "Deferred to Stage 12 after validating multi-turn clarification dialog state machine.",
+    "decision": "DEFER",
+    "date": "2026-09-12",
+    "before_metrics": {
+      "high_conf_error_rate": 0.185
+    },
+    "after_metrics": {
+      "high_conf_error_rate": 0.185
+    },
+    "tags": [
+      "confidence",
+      "ambiguity",
+      "p2"
+    ]
+  }
+]

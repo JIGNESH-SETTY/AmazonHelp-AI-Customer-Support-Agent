@@ -1,0 +1,57 @@
+{
+  "count": 37,
+  "rate": 0.185,
+  "percentage_of_failures": 88.1,
+  "affected_intents": {
+    "delivery_delay": 7,
+    "returns_and_refunds": 5,
+    "order_cancellation": 7,
+    "payment_and_billing": 3,
+    "account_access_security": 2,
+    "digital_services_technical": 3,
+    "service_complaint_escalation": 2,
+    "unknown_or_ambiguous": 8
+  },
+  "sample_examples": [
+    {
+      "example_id": "golden_003",
+      "gold_intent": "delivery_delay",
+      "predicted_intent": "missing_delivered_package",
+      "confidence": 0.95,
+      "message_snippet": "Trying to get free standard locker delivery to my office building but it's not o",
+      "root_cause": "High-weight lexical trigger ('not received' / 'missing') triggered missing package rule on an inquiry that only asked about delayed tracking."
+    },
+    {
+      "example_id": "golden_004",
+      "gold_intent": "delivery_delay",
+      "predicted_intent": "missing_delivered_package",
+      "confidence": 0.95,
+      "message_snippet": "Just wondering if you think this looks like a secure delivery, considering I hav",
+      "root_cause": "High-weight lexical trigger ('not received' / 'missing') triggered missing package rule on an inquiry that only asked about delayed tracking."
+    },
+    {
+      "example_id": "golden_010",
+      "gold_intent": "delivery_delay",
+      "predicted_intent": "prime_membership",
+      "confidence": 0.95,
+      "message_snippet": "Hey Amazon, I'm new to this online shopping thing. Is there a difference between",
+      "root_cause": "Compound customer request triggers multiple high-weight lexical rules simultaneously."
+    },
+    {
+      "example_id": "golden_012",
+      "gold_intent": "delivery_delay",
+      "predicted_intent": "digital_services_technical",
+      "confidence": 0.95,
+      "message_snippet": "trying to place an order via pantry and use code PANTRY10 as its my first order.",
+      "root_cause": "Overlapping TF-IDF term weights between 'delivery_delay' and 'digital_services_technical'."
+    },
+    {
+      "example_id": "golden_014",
+      "gold_intent": "delivery_delay",
+      "predicted_intent": "missing_delivered_package",
+      "confidence": 0.95,
+      "message_snippet": "Did not receive my package again 🤬",
+      "root_cause": "High-weight lexical trigger ('not received' / 'missing') triggered missing package rule on an inquiry that only asked about delayed tracking."
+    }
+  ]
+}

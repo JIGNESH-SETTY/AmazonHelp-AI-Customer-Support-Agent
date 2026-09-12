@@ -1,0 +1,50 @@
+{
+  "stage": 7,
+  "name": "AmazonHelp Golden Evaluation Set",
+  "schema_version": "1.0",
+  "brand": "AmazonHelp",
+  "creation_timestamp": "2026-09-12 06:45:00 UTC",
+  "random_seed": 42,
+  "target_size": 200,
+  "actual_size": 200,
+  "source_split": "Stage 4 test split (zero leakage from train/validation)",
+  "intents_covered_count": 11,
+  "canonical_intents_covered": 10,
+  "total_canonical_intents": 10,
+  "intent_distribution": {
+    "delivery_delay": 18,
+    "missing_delivered_package": 18,
+    "returns_and_refunds": 18,
+    "damaged_defective_item": 18,
+    "order_cancellation": 18,
+    "payment_and_billing": 18,
+    "prime_membership": 18,
+    "account_access_security": 18,
+    "digital_services_technical": 18,
+    "service_complaint_escalation": 18,
+    "unknown_or_ambiguous": 20
+  },
+  "difficulty_distribution": {
+    "hard": 132,
+    "medium": 41,
+    "easy": 27
+  },
+  "response_type_distribution": {
+    "escalation": 111,
+    "clarification": 37,
+    "resolution": 52
+  },
+  "secondary_intent_count": 18,
+  "filter_statistics": {
+    "raw_test_pairs_read": 8777,
+    "matched_with_intent_label": 8448,
+    "rejected_length": 174,
+    "rejected_noise": 155,
+    "rejected_missing_response": 0
+  },
+  "duplicate_statistics": {
+    "exact_duplicates_rejected": 0,
+    "near_duplicates_rejected": 0,
+    "conv_id_collisions_rejected": 4
+  }
+}

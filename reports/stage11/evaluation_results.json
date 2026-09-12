@@ -1,0 +1,493 @@
+{
+  "harness_version": "1.0",
+  "stage": 10,
+  "system_name": "Stage 11 Candidate Agent",
+  "timestamp": "2026-09-12 07:30:00 UTC",
+  "random_seed": 42,
+  "total_evaluated": 200,
+  "classification_metrics": {
+    "accuracy": 0.82,
+    "accuracy_ci_95": [
+      0.765,
+      0.875
+    ],
+    "macro_precision": 0.8268,
+    "macro_recall": 0.8227,
+    "macro_f1": 0.8204,
+    "weighted_f1": 0.8185,
+    "top_k_accuracy": 0.0,
+    "per_intent": {
+      "account_access_security": {
+        "support": 18,
+        "precision": 0.8889,
+        "recall": 0.8889,
+        "f1": 0.8889
+      },
+      "damaged_defective_item": {
+        "support": 18,
+        "precision": 0.85,
+        "recall": 0.9444,
+        "f1": 0.8947
+      },
+      "delivery_delay": {
+        "support": 18,
+        "precision": 0.5789,
+        "recall": 0.6111,
+        "f1": 0.5946
+      },
+      "digital_services_technical": {
+        "support": 18,
+        "precision": 0.8824,
+        "recall": 0.8333,
+        "f1": 0.8571
+      },
+      "missing_delivered_package": {
+        "support": 18,
+        "precision": 0.8182,
+        "recall": 1.0,
+        "f1": 0.9
+      },
+      "order_cancellation": {
+        "support": 18,
+        "precision": 1.0,
+        "recall": 0.7778,
+        "f1": 0.875
+      },
+      "payment_and_billing": {
+        "support": 18,
+        "precision": 0.8824,
+        "recall": 0.8333,
+        "f1": 0.8571
+      },
+      "prime_membership": {
+        "support": 18,
+        "precision": 0.9,
+        "recall": 1.0,
+        "f1": 0.9474
+      },
+      "returns_and_refunds": {
+        "support": 18,
+        "precision": 0.619,
+        "recall": 0.7222,
+        "f1": 0.6667
+      },
+      "service_complaint_escalation": {
+        "support": 18,
+        "precision": 0.9412,
+        "recall": 0.8889,
+        "f1": 0.9143
+      },
+      "unknown_or_ambiguous": {
+        "support": 20,
+        "precision": 0.7333,
+        "recall": 0.55,
+        "f1": 0.6286
+      }
+    },
+    "confusion_matrix": {
+      "account_access_security": {
+        "account_access_security": 16,
+        "damaged_defective_item": 0,
+        "delivery_delay": 0,
+        "digital_services_technical": 0,
+        "missing_delivered_package": 0,
+        "order_cancellation": 0,
+        "payment_and_billing": 0,
+        "prime_membership": 0,
+        "returns_and_refunds": 0,
+        "service_complaint_escalation": 0,
+        "unknown_or_ambiguous": 2
+      },
+      "damaged_defective_item": {
+        "account_access_security": 0,
+        "damaged_defective_item": 17,
+        "delivery_delay": 0,
+        "digital_services_technical": 0,
+        "missing_delivered_package": 0,
+        "order_cancellation": 0,
+        "payment_and_billing": 0,
+        "prime_membership": 0,
+        "returns_and_refunds": 1,
+        "service_complaint_escalation": 0,
+        "unknown_or_ambiguous": 0
+      },
+      "delivery_delay": {
+        "account_access_security": 0,
+        "damaged_defective_item": 0,
+        "delivery_delay": 11,
+        "digital_services_technical": 1,
+        "missing_delivered_package": 3,
+        "order_cancellation": 0,
+        "payment_and_billing": 0,
+        "prime_membership": 2,
+        "returns_and_refunds": 1,
+        "service_complaint_escalation": 0,
+        "unknown_or_ambiguous": 0
+      },
+      "digital_services_technical": {
+        "account_access_security": 0,
+        "damaged_defective_item": 0,
+        "delivery_delay": 2,
+        "digital_services_technical": 15,
+        "missing_delivered_package": 0,
+        "order_cancellation": 0,
+        "payment_and_billing": 0,
+        "prime_membership": 0,
+        "returns_and_refunds": 0,
+        "service_complaint_escalation": 0,
+        "unknown_or_ambiguous": 1
+      },
+      "missing_delivered_package": {
+        "account_access_security": 0,
+        "damaged_defective_item": 0,
+        "delivery_delay": 0,
+        "digital_services_technical": 0,
+        "missing_delivered_package": 18,
+        "order_cancellation": 0,
+        "payment_and_billing": 0,
+        "prime_membership": 0,
+        "returns_and_refunds": 0,
+        "service_complaint_escalation": 0,
+        "unknown_or_ambiguous": 0
+      },
+      "order_cancellation": {
+        "account_access_security": 0,
+        "damaged_defective_item": 0,
+        "delivery_delay": 2,
+        "digital_services_technical": 1,
+        "missing_delivered_package": 0,
+        "order_cancellation": 14,
+        "payment_and_billing": 0,
+        "prime_membership": 0,
+        "returns_and_refunds": 1,
+        "service_complaint_escalation": 0,
+        "unknown_or_ambiguous": 0
+      },
+      "payment_and_billing": {
+        "account_access_security": 1,
+        "damaged_defective_item": 0,
+        "delivery_delay": 0,
+        "digital_services_technical": 0,
+        "missing_delivered_package": 0,
+        "order_cancellation": 0,
+        "payment_and_billing": 15,
+        "prime_membership": 0,
+        "returns_and_refunds": 2,
+        "service_complaint_escalation": 0,
+        "unknown_or_ambiguous": 0
+      },
+      "prime_membership": {
+        "account_access_security": 0,
+        "damaged_defective_item": 0,
+        "delivery_delay": 0,
+        "digital_services_technical": 0,
+        "missing_delivered_package": 0,
+        "order_cancellation": 0,
+        "payment_and_billing": 0,
+        "prime_membership": 18,
+        "returns_and_refunds": 0,
+        "service_complaint_escalation": 0,
+        "unknown_or_ambiguous": 0
+      },
+      "returns_and_refunds": {
+        "account_access_security": 0,
+        "damaged_defective_item": 1,
+        "delivery_delay": 2,
+        "digital_services_technical": 0,
+        "missing_delivered_package": 0,
+        "order_cancellation": 0,
+        "payment_and_billing": 1,
+        "prime_membership": 0,
+        "returns_and_refunds": 13,
+        "service_complaint_escalation": 0,
+        "unknown_or_ambiguous": 1
+      },
+      "service_complaint_escalation": {
+        "account_access_security": 0,
+        "damaged_defective_item": 0,
+        "delivery_delay": 1,
+        "digital_services_technical": 0,
+        "missing_delivered_package": 0,
+        "order_cancellation": 0,
+        "payment_and_billing": 0,
+        "prime_membership": 0,
+        "returns_and_refunds": 1,
+        "service_complaint_escalation": 16,
+        "unknown_or_ambiguous": 0
+      },
+      "unknown_or_ambiguous": {
+        "account_access_security": 1,
+        "damaged_defective_item": 2,
+        "delivery_delay": 1,
+        "digital_services_technical": 0,
+        "missing_delivered_package": 1,
+        "order_cancellation": 0,
+        "payment_and_billing": 1,
+        "prime_membership": 0,
+        "returns_and_refunds": 2,
+        "service_complaint_escalation": 1,
+        "unknown_or_ambiguous": 11
+      }
+    },
+    "accuracy_by_difficulty": {
+      "easy": 0.8889,
+      "medium": 0.8537,
+      "hard": 0.7955
+    }
+  },
+  "generation_metrics": {
+    "rouge_1": 0.1539,
+    "rouge_2": 0.0154,
+    "rouge_l": 0.1101,
+    "bleu_1": 0.1156,
+    "bleu_2": 0.0246,
+    "guidance_adherence_rate": 0.905,
+    "policy_safety_rate": 1.0,
+    "unsupported_action_rate": 0.0,
+    "hallucinated_guarantee_rate": 0.0,
+    "insecure_request_rate": 0.0,
+    "latency_ms": 3.479
+  },
+  "escalation_metrics": {
+    "overall_escalation_rate": 0.105,
+    "correct_escalation_rate": 0.64,
+    "unnecessary_escalation_rate": 0.0286,
+    "missed_escalation_rate": 0.36,
+    "total_escalated": 21
+  },
+  "confidence_calibration": {
+    "expected_calibration_error": 0.1539,
+    "mean_confidence_overall": 0.9155,
+    "mean_confidence_correct": 0.9152,
+    "mean_confidence_incorrect": 0.9166,
+    "low_confidence_rate": 0.02
+  },
+  "latency_profile": {
+    "mean_ms": 3.479,
+    "median_ms": 3.001,
+    "p95_ms": 7.001,
+    "min_ms": 0.0,
+    "max_ms": 11.51,
+    "sample_count": 200
+  },
+  "error_analysis_summary": {
+    "total_failures": 36,
+    "total_evaluated": 200,
+    "failure_rate": 0.18,
+    "failure_categories": {
+      "intent_confusion": 21,
+      "multi_intent_failure": 5,
+      "insufficient_context": 10
+    },
+    "failures_by_difficulty": {
+      "medium": 6,
+      "hard": 27,
+      "easy": 3
+    },
+    "sample_failures": [
+      {
+        "example_id": "golden_003",
+        "conversation_id": "conv_1736152",
+        "difficulty": "medium",
+        "gold_intent": "delivery_delay",
+        "gold_intent_name": "Delivery Delay & Tracking",
+        "predicted_intent": "missing_delivered_package",
+        "confidence": 0.95,
+        "secondary_intent": null,
+        "customer_message": "Trying to get free standard locker delivery to my office building but it's not offering it to me. Faust or Katy lockers.",
+        "generated_response": "Thanks for reaching out to Amazon Customer Support. We apologize that your package is marked as delivered but cannot be located. Please check around your porch, building mailroom, or with neighbors. If the parcel is still missing after checking, If you have your order ID handy, please share it with us via secure message so we can investigate. please reach out so we can initiate a carrier search.",
+        "policy_result": {
+          "passed": true,
+          "violations": [],
+          "warnings": [],
+          "remediated": false
+        },
+        "escalation_decision": {
+          "required": false,
+          "reason": null,
+          "priority": "none"
+        },
+        "guidance_adherence": 1.0,
+        "failure_category": "intent_confusion"
+      },
+      {
+        "example_id": "golden_004",
+        "conversation_id": "conv_96740",
+        "difficulty": "hard",
+        "gold_intent": "delivery_delay",
+        "gold_intent_name": "Delivery Delay & Tracking",
+        "predicted_intent": "missing_delivered_package",
+        "confidence": 0.95,
+        "secondary_intent": null,
+        "customer_message": "Just wondering if you think this looks like a secure delivery, considering I have had one package go missing this week already? <URL>",
+        "generated_response": "Thanks for reaching out to Amazon Customer Support. We apologize that your package is marked as delivered but cannot be located. Please check around your porch, building mailroom, or with neighbors. If the parcel is still missing after checking, If you have your order ID handy, please share it with us via secure message so we can investigate. please reach out so we can initiate a carrier search.",
+        "policy_result": {
+          "passed": true,
+          "violations": [],
+          "warnings": [],
+          "remediated": false
+        },
+        "escalation_decision": {
+          "required": false,
+          "reason": null,
+          "priority": "none"
+        },
+        "guidance_adherence": 1.0,
+        "failure_category": "intent_confusion"
+      },
+      {
+        "example_id": "golden_010",
+        "conversation_id": "conv_2876329",
+        "difficulty": "hard",
+        "gold_intent": "delivery_delay",
+        "gold_intent_name": "Delivery Delay & Tracking",
+        "predicted_intent": "prime_membership",
+        "confidence": 0.95,
+        "secondary_intent": "prime_membership",
+        "customer_message": "Hey Amazon, I'm new to this online shopping thing. Is there a difference between delivery and shipping? I got Prime's 2-day shipping so I'm expecting my item to be here in 2 days.",
+        "generated_response": "Thanks for reaching out to Amazon Customer Support. You can review your Prime membership benefits, renewal dates, or cancel subscription settings at Manage Prime: <URL>. If you have not utilized Prime benefits during the billing cycle, you may be eligible for a refund.",
+        "policy_result": {
+          "passed": true,
+          "violations": [],
+          "warnings": [],
+          "remediated": false
+        },
+        "escalation_decision": {
+          "required": false,
+          "reason": null,
+          "priority": "none"
+        },
+        "guidance_adherence": 0.0,
+        "failure_category": "multi_intent_failure"
+      },
+      {
+        "example_id": "golden_012",
+        "conversation_id": "conv_101674",
+        "difficulty": "hard",
+        "gold_intent": "delivery_delay",
+        "gold_intent_name": "Delivery Delay & Tracking",
+        "predicted_intent": "digital_services_technical",
+        "confidence": 0.95,
+        "secondary_intent": null,
+        "customer_message": "trying to place an order via pantry and use code PANTRY10 as its my first order. I tried speaking to someone last night but they cut me off? Any advice? Thanks",
+        "generated_response": "Thanks for getting in touch with us! For troubleshooting your device or digital service, we recommend restarting the device and verifying that the app or firmware is updated. Detailed troubleshooting guides are available at Device Support: <URL>.",
+        "policy_result": {
+          "passed": true,
+          "violations": [],
+          "warnings": [],
+          "remediated": false
+        },
+        "escalation_decision": {
+          "required": false,
+          "reason": null,
+          "priority": "none"
+        },
+        "guidance_adherence": 0.0,
+        "failure_category": "intent_confusion"
+      },
+      {
+        "example_id": "golden_014",
+        "conversation_id": "conv_2709929",
+        "difficulty": "medium",
+        "gold_intent": "delivery_delay",
+        "gold_intent_name": "Delivery Delay & Tracking",
+        "predicted_intent": "missing_delivered_package",
+        "confidence": 0.95,
+        "secondary_intent": null,
+        "customer_message": "Did not receive my package again \ud83e\udd2c",
+        "generated_response": "We are very sorry to hear about the trouble with your request. We apologize that your package is marked as delivered but cannot be located. Please check around your porch, building mailroom, or with neighbors. If the parcel is still missing after checking, If you have your order ID handy, please share it with us via secure message so we can investigate. please reach out so we can initiate a carrier search.",
+        "policy_result": {
+          "passed": true,
+          "violations": [],
+          "warnings": [],
+          "remediated": false
+        },
+        "escalation_decision": {
+          "required": false,
+          "reason": null,
+          "priority": "none"
+        },
+        "guidance_adherence": 1.0,
+        "failure_category": "intent_confusion"
+      }
+    ]
+  },
+  "baseline_comparison": {
+    "overall_accuracy": {
+      "stage8_baseline": 0.705,
+      "current_system": 0.82,
+      "absolute_delta": 0.115,
+      "percentage_delta": 16.31,
+      "improved": true,
+      "winner": "Current System"
+    },
+    "macro_f1": {
+      "stage8_baseline": 0.7077,
+      "current_system": 0.8204,
+      "absolute_delta": 0.1127,
+      "percentage_delta": 15.92,
+      "improved": true,
+      "winner": "Current System"
+    },
+    "weighted_f1": {
+      "stage8_baseline": 0.7064,
+      "current_system": 0.8185,
+      "absolute_delta": 0.1121,
+      "percentage_delta": 15.87,
+      "improved": true,
+      "winner": "Current System"
+    },
+    "hard_difficulty_accuracy": {
+      "stage8_baseline": 0.6667,
+      "current_system": 0.7955,
+      "absolute_delta": 0.1288,
+      "percentage_delta": 19.32,
+      "improved": true,
+      "winner": "Current System"
+    },
+    "easy_difficulty_accuracy": {
+      "stage8_baseline": 0.8148,
+      "current_system": 0.8889,
+      "absolute_delta": 0.0741,
+      "percentage_delta": 9.09,
+      "improved": true,
+      "winner": "Current System"
+    },
+    "medium_difficulty_accuracy": {
+      "stage8_baseline": 0.7561,
+      "current_system": 0.8537,
+      "absolute_delta": 0.0976,
+      "percentage_delta": 12.91,
+      "improved": true,
+      "winner": "Current System"
+    },
+    "guidance_adherence_rate": {
+      "stage8_baseline": 0.795,
+      "current_system": 0.905,
+      "absolute_delta": 0.11,
+      "percentage_delta": 13.84,
+      "improved": true,
+      "winner": "Current System"
+    },
+    "policy_safety_rate": {
+      "stage8_baseline": 1.0,
+      "current_system": 1.0,
+      "absolute_delta": 0.0,
+      "percentage_delta": 0.0,
+      "improved": true,
+      "winner": "Current System"
+    },
+    "latency_ms": {
+      "stage8_baseline": 0.093,
+      "current_system": 3.479,
+      "absolute_delta": 3.386,
+      "percentage_delta": 3640.86,
+      "improved": false,
+      "winner": "Stage 8 Baseline"
+    }
+  },
+  "regression_status": {
+    "passed": true,
+    "warnings": []
+  }
+}

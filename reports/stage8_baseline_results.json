@@ -1,0 +1,362 @@
+{
+  "stage": 8,
+  "name": "Stage 8 Baseline Evaluation Results",
+  "benchmark_dataset": "Stage 7 Golden Evaluation Set (200 examples)",
+  "training_samples_fitted": 25000,
+  "timestamp": "2026-09-12 06:55:00 UTC",
+  "intent_classification_baselines": {
+    "majority_class": {
+      "accuracy": 0.09,
+      "macro_precision": 0.0082,
+      "macro_recall": 0.0909,
+      "macro_f1": 0.015,
+      "weighted_f1": 0.0149,
+      "per_class": {
+        "account_access_security": {
+          "support": 18,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "damaged_defective_item": {
+          "support": 18,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "delivery_delay": {
+          "support": 18,
+          "precision": 0.09,
+          "recall": 1.0,
+          "f1": 0.1651
+        },
+        "digital_services_technical": {
+          "support": 18,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "missing_delivered_package": {
+          "support": 18,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "order_cancellation": {
+          "support": 18,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "payment_and_billing": {
+          "support": 18,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "prime_membership": {
+          "support": 18,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "returns_and_refunds": {
+          "support": 18,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "service_complaint_escalation": {
+          "support": 18,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "unknown_or_ambiguous": {
+          "support": 20,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "latency_ms": 0.0,
+      "accuracy_by_difficulty": {
+        "easy": 0.037,
+        "medium": 0.0976,
+        "hard": 0.0985
+      }
+    },
+    "keyword_rules": {
+      "accuracy": 0.61,
+      "macro_precision": 0.7994,
+      "macro_recall": 0.6061,
+      "macro_f1": 0.6311,
+      "weighted_f1": 0.6288,
+      "per_class": {
+        "account_access_security": {
+          "support": 18,
+          "precision": 1.0,
+          "recall": 0.6111,
+          "f1": 0.7586
+        },
+        "damaged_defective_item": {
+          "support": 18,
+          "precision": 1.0,
+          "recall": 0.9444,
+          "f1": 0.9714
+        },
+        "delivery_delay": {
+          "support": 18,
+          "precision": 0.1429,
+          "recall": 0.0556,
+          "f1": 0.08
+        },
+        "digital_services_technical": {
+          "support": 18,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6667
+        },
+        "missing_delivered_package": {
+          "support": 18,
+          "precision": 0.9231,
+          "recall": 0.6667,
+          "f1": 0.7742
+        },
+        "order_cancellation": {
+          "support": 18,
+          "precision": 1.0,
+          "recall": 0.2778,
+          "f1": 0.4348
+        },
+        "payment_and_billing": {
+          "support": 18,
+          "precision": 0.9231,
+          "recall": 0.6667,
+          "f1": 0.7742
+        },
+        "prime_membership": {
+          "support": 18,
+          "precision": 0.6538,
+          "recall": 0.9444,
+          "f1": 0.7727
+        },
+        "returns_and_refunds": {
+          "support": 18,
+          "precision": 0.9,
+          "recall": 0.5,
+          "f1": 0.6429
+        },
+        "service_complaint_escalation": {
+          "support": 18,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6667
+        },
+        "unknown_or_ambiguous": {
+          "support": 20,
+          "precision": 0.25,
+          "recall": 1.0,
+          "f1": 0.4
+        }
+      },
+      "latency_ms": 0.02,
+      "accuracy_by_difficulty": {
+        "easy": 0.6667,
+        "medium": 0.5366,
+        "hard": 0.6212
+      }
+    },
+    "tfidf_naive_bayes": {
+      "accuracy": 0.705,
+      "macro_precision": 0.7251,
+      "macro_recall": 0.7061,
+      "macro_f1": 0.7077,
+      "weighted_f1": 0.7064,
+      "per_class": {
+        "account_access_security": {
+          "support": 18,
+          "precision": 0.8,
+          "recall": 0.6667,
+          "f1": 0.7273
+        },
+        "damaged_defective_item": {
+          "support": 18,
+          "precision": 0.75,
+          "recall": 0.8333,
+          "f1": 0.7895
+        },
+        "delivery_delay": {
+          "support": 18,
+          "precision": 0.4583,
+          "recall": 0.6111,
+          "f1": 0.5238
+        },
+        "digital_services_technical": {
+          "support": 18,
+          "precision": 0.75,
+          "recall": 0.8333,
+          "f1": 0.7895
+        },
+        "missing_delivered_package": {
+          "support": 18,
+          "precision": 0.7778,
+          "recall": 0.7778,
+          "f1": 0.7778
+        },
+        "order_cancellation": {
+          "support": 18,
+          "precision": 0.9375,
+          "recall": 0.8333,
+          "f1": 0.8824
+        },
+        "payment_and_billing": {
+          "support": 18,
+          "precision": 0.7368,
+          "recall": 0.7778,
+          "f1": 0.7568
+        },
+        "prime_membership": {
+          "support": 18,
+          "precision": 0.75,
+          "recall": 0.5,
+          "f1": 0.6
+        },
+        "returns_and_refunds": {
+          "support": 18,
+          "precision": 0.6364,
+          "recall": 0.7778,
+          "f1": 0.7
+        },
+        "service_complaint_escalation": {
+          "support": 18,
+          "precision": 0.8333,
+          "recall": 0.5556,
+          "f1": 0.6667
+        },
+        "unknown_or_ambiguous": {
+          "support": 20,
+          "precision": 0.5455,
+          "recall": 0.6,
+          "f1": 0.5714
+        }
+      },
+      "latency_ms": 0.093,
+      "accuracy_by_difficulty": {
+        "easy": 0.8148,
+        "medium": 0.7561,
+        "hard": 0.6667
+      }
+    },
+    "bm25_1nn": {
+      "accuracy": 0.475,
+      "macro_precision": 0.63,
+      "macro_recall": 0.4747,
+      "macro_f1": 0.4922,
+      "weighted_f1": 0.4902,
+      "per_class": {
+        "account_access_security": {
+          "support": 18,
+          "precision": 0.6923,
+          "recall": 0.5,
+          "f1": 0.5806
+        },
+        "damaged_defective_item": {
+          "support": 18,
+          "precision": 0.75,
+          "recall": 0.3333,
+          "f1": 0.4615
+        },
+        "delivery_delay": {
+          "support": 18,
+          "precision": 0.2963,
+          "recall": 0.8889,
+          "f1": 0.4444
+        },
+        "digital_services_technical": {
+          "support": 18,
+          "precision": 0.7778,
+          "recall": 0.3889,
+          "f1": 0.5185
+        },
+        "missing_delivered_package": {
+          "support": 18,
+          "precision": 0.6667,
+          "recall": 0.2222,
+          "f1": 0.3333
+        },
+        "order_cancellation": {
+          "support": 18,
+          "precision": 0.7692,
+          "recall": 0.5556,
+          "f1": 0.6452
+        },
+        "payment_and_billing": {
+          "support": 18,
+          "precision": 1.0,
+          "recall": 0.7222,
+          "f1": 0.8387
+        },
+        "prime_membership": {
+          "support": 18,
+          "precision": 0.6154,
+          "recall": 0.4444,
+          "f1": 0.5161
+        },
+        "returns_and_refunds": {
+          "support": 18,
+          "precision": 0.5625,
+          "recall": 0.5,
+          "f1": 0.5294
+        },
+        "service_complaint_escalation": {
+          "support": 18,
+          "precision": 0.6,
+          "recall": 0.1667,
+          "f1": 0.2609
+        },
+        "unknown_or_ambiguous": {
+          "support": 20,
+          "precision": 0.2,
+          "recall": 0.5,
+          "f1": 0.2857
+        }
+      },
+      "latency_ms": 3.103,
+      "accuracy_by_difficulty": {
+        "easy": 0.6667,
+        "medium": 0.5122,
+        "hard": 0.4242
+      }
+    }
+  },
+  "response_generation_baselines": {
+    "generic_default": {
+      "rouge_1": 0.1782,
+      "rouge_2": 0.0128,
+      "rouge_l": 0.1159,
+      "bleu_1": 0.1471,
+      "bleu_2": 0.0226,
+      "guidance_adherence_rate": 0.28,
+      "latency_ms": 0.0
+    },
+    "intent_canned_template": {
+      "rouge_1": 0.1335,
+      "rouge_2": 0.0084,
+      "rouge_l": 0.0989,
+      "bleu_1": 0.109,
+      "bleu_2": 0.0135,
+      "guidance_adherence_rate": 0.795,
+      "latency_ms": 0.063
+    },
+    "bm25_retrieval": {
+      "rouge_1": 0.1809,
+      "rouge_2": 0.032,
+      "rouge_l": 0.1428,
+      "bleu_1": 0.1449,
+      "bleu_2": 0.042,
+      "guidance_adherence_rate": 0.385,
+      "latency_ms": 3.072
+    }
+  }
+}

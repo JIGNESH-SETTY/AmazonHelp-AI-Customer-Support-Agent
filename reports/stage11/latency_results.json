@@ -1,0 +1,8 @@
+{
+  "mean_ms": 3.479,
+  "median_ms": 3.001,
+  "p95_ms": 7.001,
+  "min_ms": 0.0,
+  "max_ms": 11.51,
+  "sample_count": 200
+}

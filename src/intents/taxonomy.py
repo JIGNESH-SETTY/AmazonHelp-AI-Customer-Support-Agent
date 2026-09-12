@@ -1,0 +1,377 @@
+"""
+taxonomy.py
+-----------
+STAGE 6: Canonical Support Intent Taxonomy (Version 1.0)
+
+Defines the 10 consolidated, mutually distinguishable support intents
+derived from the unsupervised discovery and theme analysis of AmazonHelp conversations:
+  1. delivery_delay
+  2. missing_delivered_package
+  3. returns_and_refunds
+  4. order_cancellation
+  5. damaged_defective_item
+  6. prime_membership
+  7. payment_and_billing
+  8. account_access_security
+  9. digital_services_technical
+  10. service_complaint_escalation
+
+Outputs:
+  - `data/intent_taxonomy.json`: Machine-readable taxonomy artifact with
+    definitions, inclusion/exclusion criteria, confusable intents, and real examples.
+"""
+
+import json
+from pathlib import Path
+import sys
+import time
+from typing import Any, Dict, List
+
+# Ensure UTF-8 stdout
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+DATA_DIR = REPO_ROOT / "data"
+TAXONOMY_JSON_PATH = DATA_DIR / "intent_taxonomy.json"
+SELECTED_BRAND_PATH = DATA_DIR / "selected_brand.json"
+
+TAXONOMY_VERSION = "1.0"
+
+
+def load_selected_brand() -> str:
+    """Loads selected brand from data/selected_brand.json."""
+    if not SELECTED_BRAND_PATH.exists():
+        raise FileNotFoundError(f"Missing {SELECTED_BRAND_PATH}")
+    with open(SELECTED_BRAND_PATH, encoding="utf-8") as fh:
+        data = json.load(fh)
+    return data["selected_brand"]
+
+
+# ---------------------------------------------------------------------------
+# Canonical Intent Definitions
+# ---------------------------------------------------------------------------
+CANONICAL_INTENTS = [
+    {
+        "intent_id": "delivery_delay",
+        "name": "Delivery Delay & Tracking",
+        "definition": "The customer is inquiring about an order that has not arrived by the expected date/time, is delayed in transit, or requires an updated tracking status.",
+        "inclusion_criteria": [
+            "Inquiries regarding order tracking status when order is not yet marked delivered.",
+            "Complaints that an order has missed its promised or guaranteed delivery date.",
+            "Questions about shipment delays, carrier dispatch hold-ups, or package transit bottlenecks.",
+            "Requests for delivery estimates on pending shipments."
+        ],
+        "exclusion_criteria": [
+            "Packages marked as 'Delivered' by the carrier that cannot be found (classify as missing_delivered_package).",
+            "Requests to cancel a delayed order (classify as order_cancellation).",
+            "Requests for a refund due to delayed shipment (classify as returns_and_refunds)."
+        ],
+        "confusable_with": [
+            "missing_delivered_package (distinction: delivery_delay packages are in transit/late; missing_delivered_package are marked delivered)",
+            "returns_and_refunds (distinction: delivery_delay asks where the order is; returns_and_refunds asks for money back)"
+        ],
+        "representative_examples": [
+            {
+                "conversation_id": "conv_628",
+                "customer_text": "How about you guys figure out my Xbox One X project Scorpio edition first. No expected delivery or shipping date and it's only a week away"
+            },
+            {
+                "conversation_id": "conv_617",
+                "customer_text": "3 different people have given 3 different answers and I still don't have my order. Says delivered Saturday, was not, I was home all day"
+            },
+            {
+                "conversation_id": "conv_4676",
+                "customer_text": "my order hasn't arrived (it was due 14th October). Can you help?"
+            }
+        ]
+    },
+    {
+        "intent_id": "missing_delivered_package",
+        "name": "Missing Delivered Package",
+        "definition": "The tracking status states the package was delivered, but the customer cannot locate the parcel at their delivery address.",
+        "inclusion_criteria": [
+            "Carrier tracking indicates 'Delivered' but the customer did not receive the parcel.",
+            "Driver reportedly left package at an unlocatable location (e.g. front porch, gate, bushes).",
+            "Suspected package theft or delivery to a wrong neighbor / address.",
+            "Proof of delivery photo showing an unfamiliar location."
+        ],
+        "exclusion_criteria": [
+            "Packages with tracking showing 'In Transit' or 'Delayed' (classify as delivery_delay).",
+            "Packages delivered with damaged or broken contents (classify as damaged_defective_item)."
+        ],
+        "confusable_with": [
+            "delivery_delay (distinction: missing_delivered_package is explicitly marked delivered in carrier system)"
+        ],
+        "representative_examples": [
+            {
+                "conversation_id": "conv_678",
+                "customer_text": "My package with my Halloween costume was delivered Friday but I don't have it so searching everywhere for a last minute idea."
+            },
+            {
+                "conversation_id": "conv_4021",
+                "customer_text": "tracking says delivered to front porch at 2pm but nothing is there. Was home all day."
+            }
+        ]
+    },
+    {
+        "intent_id": "returns_and_refunds",
+        "name": "Returns & Refunds",
+        "definition": "The customer wants to return an item, check on the status of a refund, request a replacement, or inquire about return policies and drop-off locations.",
+        "inclusion_criteria": [
+            "Requests to return an eligible delivered item.",
+            "Inquiries regarding refund timeline, pending refund credit, or bank reversal.",
+            "Questions about return shipping labels, QR codes, or UPS/Kohl's drop-off locations.",
+            "Requests for an item exchange or replacement unit."
+        ],
+        "exclusion_criteria": [
+            "Requests to cancel an order that has not yet shipped (classify as order_cancellation).",
+            "Disputed credit card transactions without formal return (classify as payment_and_billing)."
+        ],
+        "confusable_with": [
+            "order_cancellation (distinction: returns occur after item shipment/delivery; cancellation occurs before dispatch)",
+            "payment_and_billing (distinction: refund is return of purchase price; billing relates to unauthorized charges/payment methods)"
+        ],
+        "representative_examples": [
+            {
+                "conversation_id": "conv_11200",
+                "customer_text": "I dropped off my return at UPS three days ago. When will I see the refund in my account?"
+            },
+            {
+                "conversation_id": "conv_15430",
+                "customer_text": "How do I print a return label for this jacket? It does not fit."
+            }
+        ]
+    },
+    {
+        "intent_id": "order_cancellation",
+        "name": "Order Cancellation & Modification",
+        "definition": "The customer wants to cancel an order, modify order details (shipping address, quantity, payment method), or made an accidental order.",
+        "inclusion_criteria": [
+            "Requests to cancel an active order before it ships.",
+            "Accidental 1-Click orders or purchases made by children/pets.",
+            "Requests to modify shipping address, shipping speed, or item quantity on pending orders.",
+            "Inquiries as to why an order was automatically cancelled by Amazon."
+        ],
+        "exclusion_criteria": [
+            "Returning an item that has already arrived (classify as returns_and_refunds).",
+            "Canceling an Amazon Prime recurring subscription (classify as prime_membership)."
+        ],
+        "confusable_with": [
+            "returns_and_refunds (distinction: cancellation stops order before delivery)",
+            "prime_membership (distinction: order_cancellation cancels product orders, not memberships)"
+        ],
+        "representative_examples": [
+            {
+                "conversation_id": "conv_8910",
+                "customer_text": "I ordered the wrong size by mistake 10 minutes ago, how can I cancel the order before it ships?"
+            },
+            {
+                "conversation_id": "conv_12450",
+                "customer_text": "Can I change the delivery address for order #103-9948291? It's still in preparing to dispatch."
+            }
+        ]
+    },
+    {
+        "intent_id": "damaged_defective_item",
+        "name": "Damaged or Defective Item",
+        "definition": "The customer received merchandise that arrived physically broken, damaged in transit, defective, malfunctioning, or is missing parts.",
+        "inclusion_criteria": [
+            "Items with broken, cracked, smashed, or shattered parts upon unboxing.",
+            "Items in severely crushed or damaged outer packaging.",
+            "Defective electronics that do not power on or function as advertised.",
+            "Packages with missing components, missing accessories, or wrong items inside the box."
+        ],
+        "exclusion_criteria": [
+            "Digital software or e-book rendering issues (classify as digital_services_technical).",
+            "Delays in transit where item has not yet arrived (classify as delivery_delay)."
+        ],
+        "confusable_with": [
+            "returns_and_refunds (distinction: damaged_defective_item specifically reports physical product failure/defect)"
+        ],
+        "representative_examples": [
+            {
+                "conversation_id": "conv_14205",
+                "customer_text": "Opened my package and the coffee mug inside is smashed into pieces. Box had zero bubble wrap."
+            },
+            {
+                "conversation_id": "conv_18920",
+                "customer_text": "The blender I received is completely dead out of the box, won't turn on at all."
+            }
+        ]
+    },
+    {
+        "intent_id": "prime_membership",
+        "name": "Amazon Prime & Subscriptions",
+        "definition": "Inquiries regarding Amazon Prime membership status, renewal fees, trial subscriptions, Prime delivery perks, student discounts, or recurring membership charges.",
+        "inclusion_criteria": [
+            "Inquiries regarding unexplained Prime membership fees or renewal charges.",
+            "Requests to cancel Amazon Prime and obtain a membership fee refund.",
+            "Questions about Prime benefits (Prime Video, Prime Music, guaranteed delivery speeds).",
+            "Student or discounted Prime subscription eligibility."
+        ],
+        "exclusion_criteria": [
+            "Product orders shipped via Prime that are late (classify as delivery_delay).",
+            "General non-Prime credit card dispute (classify as payment_and_billing)."
+        ],
+        "confusable_with": [
+            "payment_and_billing (distinction: prime_membership specifically addresses Prime subscription fees)",
+            "delivery_delay (distinction: prime_membership questions the membership benefits; delivery_delay tracks a specific order)"
+        ],
+        "representative_examples": [
+            {
+                "conversation_id": "conv_21040",
+                "customer_text": "Why did Amazon charge my credit card $99 for Prime? I never signed up for auto-renewal!"
+            },
+            {
+                "conversation_id": "conv_24510",
+                "customer_text": "I'm paying for Prime membership but none of my orders are showing free two-day shipping anymore."
+            }
+        ]
+    },
+    {
+        "intent_id": "payment_and_billing",
+        "name": "Payment, Charges & Billing",
+        "definition": "Inquiries regarding payment methods, disputed credit/debit card charges, double billing, gift card redemption, invoice requests, or payment transaction declines.",
+        "inclusion_criteria": [
+            "Unidentified or duplicate charges appearing on bank or credit card statements.",
+            "Payment method declined, expired card updates, or checkout payment failures.",
+            "Amazon Gift Card balance not applying, invalid gift claim codes.",
+            "Requests for VAT invoices or payment receipts for accounting."
+        ],
+        "exclusion_criteria": [
+            "Specific charges for Amazon Prime membership renewal (classify as prime_membership).",
+            "Refund status inquiries following a return (classify as returns_and_refunds)."
+        ],
+        "confusable_with": [
+            "prime_membership (distinction: payment_and_billing covers product transactions, gift cards, bank declines)",
+            "returns_and_refunds (distinction: billing deals with checkout/charges; refunds deal with returned merchandise)"
+        ],
+        "representative_examples": [
+            {
+                "conversation_id": "conv_28190",
+                "customer_text": "My bank statement shows two identical charges of $45.99 from Amazon today for one order."
+            },
+            {
+                "conversation_id": "conv_30420",
+                "customer_text": "Entered my $50 gift card code at checkout but it says code is invalid or already redeemed."
+            }
+        ]
+    },
+    {
+        "intent_id": "account_access_security",
+        "name": "Account Access & Security",
+        "definition": "Customer cannot log in, has forgotten password, is locked out of their Amazon account, has 2FA/OTP issues, or suspects unauthorized account access.",
+        "inclusion_criteria": [
+            "Inability to sign in, forgotten password, password reset link not arriving.",
+            "Two-Factor Authentication (2FA) or OTP text codes not received on mobile phone.",
+            "Account locked, suspended, or placed on security hold.",
+            "Suspicion of hacked account, unauthorized email changes, or phishing attempts."
+        ],
+        "exclusion_criteria": [
+            "Standard account settings updates on accessible accounts (e.g. adding shipping address).",
+            "Inquiries regarding payment declines on accessible accounts (classify as payment_and_billing)."
+        ],
+        "confusable_with": [
+            "payment_and_billing (distinction: account_access deals with authentication/login/security; billing deals with money)"
+        ],
+        "representative_examples": [
+            {
+                "conversation_id": "conv_33910",
+                "customer_text": "I'm locked out of my Amazon account and the password reset email is never sent to my inbox."
+            },
+            {
+                "conversation_id": "conv_35800",
+                "customer_text": "Not receiving the 6-digit OTP verification code on my phone to log in. Please assist."
+            }
+        ]
+    },
+    {
+        "intent_id": "digital_services_technical",
+        "name": "Digital Devices & Services",
+        "definition": "Technical issues, bugs, or troubleshooting related to Amazon hardware devices (Kindle, Echo/Alexa, Fire TV) or digital services (Kindle eBooks, Amazon App, Prime Video, website errors).",
+        "inclusion_criteria": [
+            "Kindle e-reader freezing, screen unresponsive, or eBook download failures.",
+            "Fire TV or Fire TV Stick streaming errors, crashing apps, or remote pairing issues.",
+            "Echo / Alexa voice recognition bugs, smart home disconnection.",
+            "Amazon mobile app crashes, website error pages during browsing or checkout."
+        ],
+        "exclusion_criteria": [
+            "Physical transit damage to a newly shipped device (classify as damaged_defective_item).",
+            "Inability to log in to Amazon account on device (classify as account_access_security)."
+        ],
+        "confusable_with": [
+            "damaged_defective_item (distinction: digital_services deals with software/hardware troubleshooting; damaged deals with broken in box)"
+        ],
+        "representative_examples": [
+            {
+                "conversation_id": "conv_39100",
+                "customer_text": "My Kindle Paperwhite screen is frozen on the screensaver and holding power button for 40s does nothing."
+            },
+            {
+                "conversation_id": "conv_42310",
+                "customer_text": "Prime Video app on my Firestick keeps giving error code 5004 whenever I try to play a movie."
+            }
+        ]
+    },
+    {
+        "intent_id": "service_complaint_escalation",
+        "name": "Customer Service Escalation",
+        "definition": "Customer expresses severe dissatisfaction with prior support interactions, reports rude or unhelpful support agents, or requests immediate supervisor escalation or telephone callback.",
+        "inclusion_criteria": [
+            "Strong dissatisfaction regarding previous unhelpful or contradictory customer service agents.",
+            "Explicit requests to speak to a supervisor, team manager, or escalation department.",
+            "Demands for a customer support phone number or urgent callback.",
+            "General complaints about poor brand service quality without a single product issue."
+        ],
+        "exclusion_criteria": [
+            "Polite first-time inquiries regarding order status (classify under specific problem intent).",
+            "Routine inquiries asking for help without expressing escalation or agent dissatisfaction."
+        ],
+        "confusable_with": [
+            "delivery_delay (distinction: escalation focuses on agent failure/manager demand; delay focuses on shipment timing)"
+        ],
+        "representative_examples": [
+            {
+                "conversation_id": "conv_47800",
+                "customer_text": "Your customer support chat is completely useless. I want to speak to a supervisor immediately."
+            },
+            {
+                "conversation_id": "conv_51200",
+                "customer_text": "Third time I'm contacting you guys today, every agent tells me something different. Give me a phone number to call!"
+            }
+        ]
+    }
+]
+
+
+def create_intent_taxonomy() -> Dict[str, Any]:
+    """Generates and writes the canonical Intent Taxonomy artifact."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    brand_name = load_selected_brand()
+
+    taxonomy_payload = {
+        "stage": 6,
+        "taxonomy_version": TAXONOMY_VERSION,
+        "brand": brand_name,
+        "generation_timestamp": time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()),
+        "total_intents": len(CANONICAL_INTENTS),
+        "intents": CANONICAL_INTENTS,
+        "fallback_category": {
+            "intent_id": "unknown_or_ambiguous",
+            "name": "Unknown or Ambiguous",
+            "definition": "Conversations where the customer inquiry is too brief, lacks problem-specific context, or presents multiple conflicting intents without clear priority."
+        }
+    }
+
+    with open(TAXONOMY_JSON_PATH, "w", encoding="utf-8") as fh:
+        json.dump(taxonomy_payload, fh, indent=2, ensure_ascii=False)
+
+    print(f"✓ Canonical Intent Taxonomy (v{TAXONOMY_VERSION}) saved to: {TAXONOMY_JSON_PATH.relative_to(REPO_ROOT)}")
+    return taxonomy_payload
+
+
+if __name__ == "__main__":
+    create_intent_taxonomy()

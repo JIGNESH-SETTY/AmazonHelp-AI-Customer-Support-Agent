@@ -1,0 +1,74 @@
+{
+  "overall_accuracy": {
+    "stage8_baseline": 0.705,
+    "current_system": 0.82,
+    "absolute_delta": 0.115,
+    "percentage_delta": 16.31,
+    "improved": true,
+    "winner": "Current System"
+  },
+  "macro_f1": {
+    "stage8_baseline": 0.7077,
+    "current_system": 0.8204,
+    "absolute_delta": 0.1127,
+    "percentage_delta": 15.92,
+    "improved": true,
+    "winner": "Current System"
+  },
+  "weighted_f1": {
+    "stage8_baseline": 0.7064,
+    "current_system": 0.8185,
+    "absolute_delta": 0.1121,
+    "percentage_delta": 15.87,
+    "improved": true,
+    "winner": "Current System"
+  },
+  "hard_difficulty_accuracy": {
+    "stage8_baseline": 0.6667,
+    "current_system": 0.7955,
+    "absolute_delta": 0.1288,
+    "percentage_delta": 19.32,
+    "improved": true,
+    "winner": "Current System"
+  },
+  "easy_difficulty_accuracy": {
+    "stage8_baseline": 0.8148,
+    "current_system": 0.8889,
+    "absolute_delta": 0.0741,
+    "percentage_delta": 9.09,
+    "improved": true,
+    "winner": "Current System"
+  },
+  "medium_difficulty_accuracy": {
+    "stage8_baseline": 0.7561,
+    "current_system": 0.8537,
+    "absolute_delta": 0.0976,
+    "percentage_delta": 12.91,
+    "improved": true,
+    "winner": "Current System"
+  },
+  "guidance_adherence_rate": {
+    "stage8_baseline": 0.795,
+    "current_system": 0.905,
+    "absolute_delta": 0.11,
+    "percentage_delta": 13.84,
+    "improved": true,
+    "winner": "Current System"
+  },
+  "policy_safety_rate": {
+    "stage8_baseline": 1.0,
+    "current_system": 1.0,
+    "absolute_delta": 0.0,
+    "percentage_delta": 0.0,
+    "improved": true,
+    "winner": "Current System"
+  },
+  "latency_ms": {
+    "stage8_baseline": 0.093,
+    "current_system": 3.479,
+    "absolute_delta": 3.386,
+    "percentage_delta": 3640.86,
+    "improved": false,
+    "winner": "Stage 8 Baseline"
+  }
+}

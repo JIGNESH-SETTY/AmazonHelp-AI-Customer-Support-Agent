@@ -1,0 +1,12 @@
+intent_id,support,precision,recall,f1
+account_access_security,18,0.8889,0.8889,0.8889
+damaged_defective_item,18,0.85,0.9444,0.8947
+delivery_delay,18,0.5789,0.6111,0.5946
+digital_services_technical,18,0.8824,0.8333,0.8571
+missing_delivered_package,18,0.8182,1.0,0.9
+order_cancellation,18,1.0,0.7778,0.875
+payment_and_billing,18,0.8824,0.8333,0.8571
+prime_membership,18,0.9,1.0,0.9474
+returns_and_refunds,18,0.619,0.7222,0.6667
+service_complaint_escalation,18,0.9412,0.8889,0.9143
+unknown_or_ambiguous,20,0.7333,0.55,0.6286

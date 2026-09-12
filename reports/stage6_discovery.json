@@ -1,0 +1,932 @@
+{
+  "stage": 6,
+  "selected_brand": "AmazonHelp",
+  "generation_timestamp": "2026-09-12 06:29:42 UTC",
+  "population_statistics": {
+    "total_available_train_interactions": 70579,
+    "by_response_type": {
+      "resolution": 19335,
+      "escalation": 38372,
+      "clarification": 12872
+    }
+  },
+  "sampling_methodology": {
+    "sample_size": 15000,
+    "random_seed": 42,
+    "sampling_strategy": "Stratified sampling across resolution, escalation, and clarification interactions in Stage 4 train split",
+    "per_response_type_sample": 5000
+  },
+  "feature_extraction": {
+    "vocabulary_size": 1536,
+    "min_doc_freq": 15,
+    "max_doc_freq_ratio": 0.3,
+    "ngram_range": [
+      1,
+      2
+    ]
+  },
+  "clustering": {
+    "algorithm": "K-Means (Cosine Metric via L2-normalized TF-IDF)",
+    "n_clusters": 14,
+    "max_iterations": 25
+  },
+  "candidate_themes": [
+    {
+      "cluster_id": 10,
+      "sample_count": 2417,
+      "sample_percentage": 16.11,
+      "top_keywords": [
+        "yes",
+        "like",
+        "return",
+        "issue",
+        "already",
+        "packaging",
+        "item",
+        "guys",
+        "box",
+        "done",
+        "going",
+        "deliver",
+        "items",
+        "nothing",
+        "reply"
+      ],
+      "response_type_breakdown": {
+        "resolution": 663,
+        "escalation": 851,
+        "clarification": 903
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_537395",
+          "example_id": "pair_0021396",
+          "response_type": "clarification",
+          "customer_text": "Yes we'd like to know",
+          "similarity": 0.3632
+        },
+        {
+          "conversation_id": "conv_1615547",
+          "example_id": "pair_0054718",
+          "response_type": "clarification",
+          "customer_text": "Yes something like right in URL",
+          "similarity": 0.3236
+        },
+        {
+          "conversation_id": "conv_86097",
+          "example_id": "pair_0002494",
+          "response_type": "clarification",
+          "customer_text": "More like the description of what was in the box and what arrived is the issue, like expensive items vanished",
+          "similarity": 0.3149
+        },
+        {
+          "conversation_id": "conv_1044948",
+          "example_id": "pair_0037203",
+          "response_type": "escalation",
+          "customer_text": "yes already but no help",
+          "similarity": 0.3137
+        },
+        {
+          "conversation_id": "conv_464243",
+          "example_id": "pair_0018342",
+          "response_type": "resolution",
+          "customer_text": "Yes, on two items.",
+          "similarity": 0.2844
+        }
+      ]
+    },
+    {
+      "cluster_id": 5,
+      "sample_count": 1827,
+      "sample_percentage": 12.18,
+      "top_keywords": [
+        "order",
+        "delivery",
+        "deliver",
+        "placed",
+        "cancel",
+        "cancelled",
+        "yet",
+        "next",
+        "cancel_order",
+        "address",
+        "since",
+        "placed_order",
+        "waiting",
+        "item",
+        "received"
+      ],
+      "response_type_breakdown": {
+        "resolution": 647,
+        "escalation": 720,
+        "clarification": 460
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_461240",
+          "example_id": "pair_0018224",
+          "response_type": "resolution",
+          "customer_text": "Too bad you can fulfill my order when you said it would be here! <URL>",
+          "similarity": 0.7274
+        },
+        {
+          "conversation_id": "conv_1706403",
+          "example_id": "pair_0056864",
+          "response_type": "escalation",
+          "customer_text": "Order#402- 1144317- 1272326",
+          "similarity": 0.7274
+        },
+        {
+          "conversation_id": "conv_1261873",
+          "example_id": "pair_0043799",
+          "response_type": "resolution",
+          "customer_text": "order no. 406-0749005-4977949",
+          "similarity": 0.7274
+        },
+        {
+          "conversation_id": "conv_1259887",
+          "example_id": "pair_0043669",
+          "response_type": "escalation",
+          "customer_text": "Order # 402-7447193-2893961 Let see what you can do!",
+          "similarity": 0.7274
+        },
+        {
+          "conversation_id": "conv_1635801",
+          "example_id": "pair_0055217",
+          "response_type": "escalation",
+          "customer_text": "Order # - 406-1928030-5785137 ..help if u could.",
+          "similarity": 0.7274
+        }
+      ]
+    },
+    {
+      "cluster_id": 0,
+      "sample_count": 1599,
+      "sample_percentage": 10.66,
+      "top_keywords": [
+        "service",
+        "customer",
+        "customer_service",
+        "que",
+        "care",
+        "worst",
+        "customer_care",
+        "delivery",
+        "pathetic",
+        "ever",
+        "pas",
+        "order",
+        "por",
+        "est",
+        "poor"
+      ],
+      "response_type_breakdown": {
+        "resolution": 252,
+        "escalation": 458,
+        "clarification": 889
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_1125087",
+          "example_id": "pair_0039634",
+          "response_type": "clarification",
+          "customer_text": "Your customer service isn’t even amazon LIARS 🙂",
+          "similarity": 0.8365
+        },
+        {
+          "conversation_id": "conv_2845539",
+          "example_id": "pair_0082994",
+          "response_type": "clarification",
+          "customer_text": "Your customer service is trash",
+          "similarity": 0.8365
+        },
+        {
+          "conversation_id": "conv_2644401",
+          "example_id": "pair_0077508",
+          "response_type": "clarification",
+          "customer_text": "terrible customer service interaction with customer service",
+          "similarity": 0.7544
+        },
+        {
+          "conversation_id": "conv_437936",
+          "example_id": "pair_0017114",
+          "response_type": "escalation",
+          "customer_text": "Your customer service is great! Your delivery service not so much! <URL>",
+          "similarity": 0.7035
+        },
+        {
+          "conversation_id": "conv_527674",
+          "example_id": "pair_0020943",
+          "response_type": "escalation",
+          "customer_text": "Pathetic and heartbreaking customer service #AmazonIN <URL>",
+          "similarity": 0.6883
+        }
+      ]
+    },
+    {
+      "cluster_id": 13,
+      "sample_count": 1515,
+      "sample_percentage": 10.1,
+      "top_keywords": [
+        "need",
+        "call",
+        "phone",
+        "link",
+        "contact",
+        "number",
+        "problem",
+        "working",
+        "work",
+        "details",
+        "echo",
+        "bought",
+        "support",
+        "getting",
+        "someone"
+      ],
+      "response_type_breakdown": {
+        "resolution": 372,
+        "escalation": 564,
+        "clarification": 579
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_349766",
+          "example_id": "pair_0013038",
+          "response_type": "clarification",
+          "customer_text": "I need to contact for advertising ???",
+          "similarity": 0.4151
+        },
+        {
+          "conversation_id": "conv_419832",
+          "example_id": "pair_0016000",
+          "response_type": "clarification",
+          "customer_text": "And u think I did not try this. There is no way to proceed further in this link. I need an exec to call me. I can DM my number if required.",
+          "similarity": 0.4103
+        },
+        {
+          "conversation_id": "conv_2252933",
+          "example_id": "pair_0065271",
+          "response_type": "escalation",
+          "customer_text": "Locked out of prime account need a phone number to call",
+          "similarity": 0.4054
+        },
+        {
+          "conversation_id": "conv_1182456",
+          "example_id": "pair_0041181",
+          "response_type": "escalation",
+          "customer_text": "You need my number",
+          "similarity": 0.4035
+        },
+        {
+          "conversation_id": "conv_1338580",
+          "example_id": "pair_0046203",
+          "response_type": "resolution",
+          "customer_text": "hi i need help with my fire stick still not working (even though you sent me a new one) and i can't do it by phone or chat",
+          "similarity": 0.3853
+        }
+      ]
+    },
+    {
+      "cluster_id": 9,
+      "sample_count": 1083,
+      "sample_percentage": 7.22,
+      "top_keywords": [
+        "prime",
+        "membership",
+        "delivery",
+        "prime_membership",
+        "pay",
+        "next",
+        "paying",
+        "member",
+        "pay_prime",
+        "prime_member",
+        "paying_prime",
+        "order",
+        "point",
+        "prime_delivery",
+        "account"
+      ],
+      "response_type_breakdown": {
+        "resolution": 491,
+        "escalation": 252,
+        "clarification": 340
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_1253832",
+          "example_id": "pair_0043464",
+          "response_type": "resolution",
+          "customer_text": "ordr404-5150964-5784321 Prime membr, prime ordr on 14th, estmtd dlvry on 23rd! Same prodct, grntd dlvry 2mo if ordrd 2dy.",
+          "similarity": 0.817
+        },
+        {
+          "conversation_id": "conv_740952",
+          "example_id": "pair_0027467",
+          "response_type": "escalation",
+          "customer_text": "I don't know how to activate prime.. Please clarify it",
+          "similarity": 0.817
+        },
+        {
+          "conversation_id": "conv_2200623",
+          "example_id": "pair_0064331",
+          "response_type": "clarification",
+          "customer_text": "no me habéis entregado mi pedido de Amazon Prime y no sé el motivo... ni me habéis llamado...",
+          "similarity": 0.817
+        },
+        {
+          "conversation_id": "conv_1515357",
+          "example_id": "pair_0051878",
+          "response_type": "clarification",
+          "customer_text": "E' un giorno triste, di quelli in cui le sicurezze ti vengono a mancare.\nSono stato paccato dal corriere di Amazon Prime.\n#TuttoFinito",
+          "similarity": 0.817
+        },
+        {
+          "conversation_id": "conv_1021626",
+          "example_id": "pair_0036499",
+          "response_type": "resolution",
+          "customer_text": "The last one was £7.99 amazon prime",
+          "similarity": 0.817
+        }
+      ]
+    },
+    {
+      "cluster_id": 6,
+      "sample_count": 1072,
+      "sample_percentage": 7.15,
+      "top_keywords": [
+        "delivered",
+        "says",
+        "parcel",
+        "order",
+        "order_delivered",
+        "door",
+        "delivery",
+        "tracking",
+        "says_delivered",
+        "supposed",
+        "left",
+        "supposed_delivered",
+        "item",
+        "packages",
+        "received"
+      ],
+      "response_type_breakdown": {
+        "resolution": 446,
+        "escalation": 398,
+        "clarification": 228
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_2793023",
+          "example_id": "pair_0081374",
+          "response_type": "escalation",
+          "customer_text": "Delivered today. Luckily it was still there.",
+          "similarity": 0.7245
+        },
+        {
+          "conversation_id": "conv_1258986",
+          "example_id": "pair_0043637",
+          "response_type": "resolution",
+          "customer_text": "That it would be delivered tomorrow. And it wasn’t.",
+          "similarity": 0.7245
+        },
+        {
+          "conversation_id": "conv_1132112",
+          "example_id": "pair_0039897",
+          "response_type": "resolution",
+          "customer_text": "Its being more than 15 days but my Microwave still not delivered by you. still roming herethere wid my microwave.",
+          "similarity": 0.7245
+        },
+        {
+          "conversation_id": "conv_523449",
+          "example_id": "pair_0020754",
+          "response_type": "escalation",
+          "customer_text": "can you get it delivered today? Please!! <URL>",
+          "similarity": 0.7245
+        },
+        {
+          "conversation_id": "conv_138094",
+          "example_id": "pair_0004218",
+          "response_type": "resolution",
+          "customer_text": "when will the Reputation albums be delivered?",
+          "similarity": 0.7245
+        }
+      ]
+    },
+    {
+      "cluster_id": 12,
+      "sample_count": 929,
+      "sample_percentage": 6.19,
+      "top_keywords": [
+        "product",
+        "refund",
+        "received",
+        "money",
+        "order",
+        "return",
+        "replacement",
+        "want",
+        "returned",
+        "product_delivered",
+        "delivered",
+        "item",
+        "delivery",
+        "take",
+        "process"
+      ],
+      "response_type_breakdown": {
+        "resolution": 337,
+        "escalation": 371,
+        "clarification": 221
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_348176",
+          "example_id": "pair_0012776",
+          "response_type": "resolution",
+          "customer_text": "I need product , not refund",
+          "similarity": 0.7048
+        },
+        {
+          "conversation_id": "conv_446699",
+          "example_id": "pair_0017587",
+          "response_type": "resolution",
+          "customer_text": "Thanks for damaging my product!! <URL>",
+          "similarity": 0.6659
+        },
+        {
+          "conversation_id": "conv_755717",
+          "example_id": "pair_0027877",
+          "response_type": "escalation",
+          "customer_text": "Need to get a refund of this product that I returned. ResQTech Pressure Washer. <URL>",
+          "similarity": 0.6077
+        },
+        {
+          "conversation_id": "conv_2928988",
+          "example_id": "pair_0086177",
+          "response_type": "resolution",
+          "customer_text": "When guarantees One Day Delivery but your product still isn’t here......",
+          "similarity": 0.5767
+        },
+        {
+          "conversation_id": "conv_2457795",
+          "example_id": "pair_0072208",
+          "response_type": "resolution",
+          "customer_text": "Still the refund for the same product not provided can u let me know about this",
+          "similarity": 0.5752
+        }
+      ]
+    },
+    {
+      "cluster_id": 7,
+      "sample_count": 906,
+      "sample_percentage": 6.04,
+      "top_keywords": [
+        "ordered",
+        "shipped",
+        "arrive",
+        "yet",
+        "pre",
+        "waiting",
+        "delivery",
+        "pre_ordered",
+        "item",
+        "ago",
+        "book",
+        "delivered",
+        "prime",
+        "received",
+        "arriving"
+      ],
+      "response_type_breakdown": {
+        "resolution": 402,
+        "escalation": 258,
+        "clarification": 246
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_465131",
+          "example_id": "pair_0018401",
+          "response_type": "clarification",
+          "customer_text": "The other two, both ordered on 11/27 say they will be here today.",
+          "similarity": 0.8171
+        },
+        {
+          "conversation_id": "conv_490446",
+          "example_id": "pair_0019546",
+          "response_type": "resolution",
+          "customer_text": "this is not what I ordered <URL>",
+          "similarity": 0.8171
+        },
+        {
+          "conversation_id": "conv_2930630",
+          "example_id": "pair_0086229",
+          "response_type": "clarification",
+          "customer_text": "I ordered in US..",
+          "similarity": 0.8171
+        },
+        {
+          "conversation_id": "conv_788673",
+          "example_id": "pair_0029025",
+          "response_type": "resolution",
+          "customer_text": "Just this one when I ordered it? <URL>",
+          "similarity": 0.8171
+        },
+        {
+          "conversation_id": "conv_176372",
+          "example_id": "pair_0005384",
+          "response_type": "resolution",
+          "customer_text": "It was ordered from <URL>",
+          "similarity": 0.8171
+        }
+      ]
+    },
+    {
+      "cluster_id": 1,
+      "sample_count": 847,
+      "sample_percentage": 5.65,
+      "top_keywords": [
+        "account",
+        "email",
+        "locked",
+        "address",
+        "received",
+        "email_address",
+        "bank",
+        "password",
+        "saying",
+        "sent",
+        "bank_account",
+        "order",
+        "check",
+        "email_saying",
+        "received_email"
+      ],
+      "response_type_breakdown": {
+        "resolution": 193,
+        "escalation": 318,
+        "clarification": 336
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_1085128",
+          "example_id": "pair_0038263",
+          "response_type": "escalation",
+          "customer_text": "I did. There's no email from how to unlock my account. It's been days.",
+          "similarity": 0.8861
+        },
+        {
+          "conversation_id": "conv_2724564",
+          "example_id": "pair_0079463",
+          "response_type": "clarification",
+          "customer_text": "can i get some help with my amazon account",
+          "similarity": 0.6412
+        },
+        {
+          "conversation_id": "conv_479315",
+          "example_id": "pair_0019110",
+          "response_type": "resolution",
+          "customer_text": "Now you are blocking me out of my account? #HotSmart <URL>",
+          "similarity": 0.6412
+        },
+        {
+          "conversation_id": "conv_1616054",
+          "example_id": "pair_0054739",
+          "response_type": "escalation",
+          "customer_text": "I can’t get into my account 😒",
+          "similarity": 0.6412
+        },
+        {
+          "conversation_id": "conv_231735",
+          "example_id": "pair_0007337",
+          "response_type": "escalation",
+          "customer_text": "This hasn't helped, it doesn't recognise my Amazon account. Any other suggestions?",
+          "similarity": 0.6412
+        }
+      ]
+    },
+    {
+      "cluster_id": 2,
+      "sample_count": 752,
+      "sample_percentage": 5.01,
+      "top_keywords": [
+        "package",
+        "delivered",
+        "package_delivered",
+        "delivery",
+        "supposed",
+        "late",
+        "carrier",
+        "package_supposed",
+        "lost",
+        "deliver",
+        "deliver_package",
+        "says",
+        "door",
+        "received",
+        "package_delivery"
+      ],
+      "response_type_breakdown": {
+        "resolution": 424,
+        "escalation": 197,
+        "clarification": 131
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_2731144",
+          "example_id": "pair_0079640",
+          "response_type": "resolution",
+          "customer_text": "Where is my amazon package?! HUH!?",
+          "similarity": 0.8973
+        },
+        {
+          "conversation_id": "conv_1312508",
+          "example_id": "pair_0045434",
+          "response_type": "resolution",
+          "customer_text": "where's my package bro",
+          "similarity": 0.8973
+        },
+        {
+          "conversation_id": "conv_376811",
+          "example_id": "pair_0013977",
+          "response_type": "resolution",
+          "customer_text": "Yo amazon where is my package 👀 if it's \"on time\" <URL>",
+          "similarity": 0.8973
+        },
+        {
+          "conversation_id": "conv_1172206",
+          "example_id": "pair_0040975",
+          "response_type": "resolution",
+          "customer_text": "Amazon is dumb for not requiring a signature for a $500 package. \nThat's just my humble opinion.",
+          "similarity": 0.8973
+        },
+        {
+          "conversation_id": "conv_714181",
+          "example_id": "pair_0026614",
+          "response_type": "resolution",
+          "customer_text": "where is my package?????????",
+          "similarity": 0.8973
+        }
+      ]
+    },
+    {
+      "cluster_id": 11,
+      "sample_count": 752,
+      "sample_percentage": 5.01,
+      "top_keywords": [
+        "app",
+        "kindle",
+        "alexa",
+        "book",
+        "find",
+        "available",
+        "books",
+        "option",
+        "download",
+        "video",
+        "buy",
+        "ios",
+        "subtitles",
+        "iphone",
+        "keeps"
+      ],
+      "response_type_breakdown": {
+        "resolution": 198,
+        "escalation": 220,
+        "clarification": 334
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_683095",
+          "example_id": "pair_0025804",
+          "response_type": "clarification",
+          "customer_text": "Is the app down? <URL>",
+          "similarity": 0.7523
+        },
+        {
+          "conversation_id": "conv_812131",
+          "example_id": "pair_0029785",
+          "response_type": "clarification",
+          "customer_text": "Through the app on my TV",
+          "similarity": 0.7523
+        },
+        {
+          "conversation_id": "conv_1427409",
+          "example_id": "pair_0049166",
+          "response_type": "escalation",
+          "customer_text": "LGQ6 over heating n ur smrt chk app nt shwing tis its nt my mistek\nIf anytng hapnd wit me hu ll respsbl LG or AMAZON",
+          "similarity": 0.7523
+        },
+        {
+          "conversation_id": "conv_2388010",
+          "example_id": "pair_0070242",
+          "response_type": "escalation",
+          "customer_text": "Thank you. Im trying to do it via the app",
+          "similarity": 0.7523
+        },
+        {
+          "conversation_id": "conv_103119",
+          "example_id": "pair_0003049",
+          "response_type": "escalation",
+          "customer_text": "Thank you! The UK app",
+          "similarity": 0.7523
+        }
+      ]
+    },
+    {
+      "cluster_id": 8,
+      "sample_count": 516,
+      "sample_percentage": 3.44,
+      "top_keywords": [
+        "shipping",
+        "prime",
+        "prime_shipping",
+        "paid",
+        "order",
+        "package",
+        "free",
+        "free_shipping",
+        "pay",
+        "paid_shipping",
+        "delayed",
+        "ordered",
+        "something",
+        "item",
+        "says"
+      ],
+      "response_type_breakdown": {
+        "resolution": 304,
+        "escalation": 94,
+        "clarification": 118
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_527101",
+          "example_id": "pair_0020913",
+          "response_type": "clarification",
+          "customer_text": "Thanks for the \"1 day shipping\" it's been 4 days..",
+          "similarity": 0.8916
+        },
+        {
+          "conversation_id": "conv_1636500",
+          "example_id": "pair_0055232",
+          "response_type": "clarification",
+          "customer_text": "Darn amazon and shipping huh",
+          "similarity": 0.8916
+        },
+        {
+          "conversation_id": "conv_554649",
+          "example_id": "pair_0021989",
+          "response_type": "resolution",
+          "customer_text": "When doesn’t pull through with their 2 day shipping so you have to make do <URL>",
+          "similarity": 0.8916
+        },
+        {
+          "conversation_id": "conv_375281",
+          "example_id": "pair_0013945",
+          "response_type": "resolution",
+          "customer_text": "So much for one day shipping!",
+          "similarity": 0.8916
+        },
+        {
+          "conversation_id": "conv_425064",
+          "example_id": "pair_0016460",
+          "response_type": "resolution",
+          "customer_text": "I got 2 day shipping and it’s been a week... help",
+          "similarity": 0.8916
+        }
+      ]
+    },
+    {
+      "cluster_id": 3,
+      "sample_count": 411,
+      "sample_percentage": 2.74,
+      "top_keywords": [
+        "card",
+        "credit",
+        "credit_card",
+        "gift",
+        "gift_card",
+        "order",
+        "cashback",
+        "payment",
+        "order_credit",
+        "pay",
+        "balance",
+        "used",
+        "account",
+        "money",
+        "cards"
+      ],
+      "response_type_breakdown": {
+        "resolution": 104,
+        "escalation": 171,
+        "clarification": 136
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_341604",
+          "example_id": "pair_0012475",
+          "response_type": "escalation",
+          "customer_text": "to my credit card.",
+          "similarity": 0.7497
+        },
+        {
+          "conversation_id": "conv_701367",
+          "example_id": "pair_0026236",
+          "response_type": "escalation",
+          "customer_text": "The description says AT17322__credit_card__ and AT17321__credit_card__",
+          "similarity": 0.7301
+        },
+        {
+          "conversation_id": "conv_358780",
+          "example_id": "pair_0013436",
+          "response_type": "clarification",
+          "customer_text": "+6282232645222 I cant use my gift card to order, i havent credit card, so i have gift card only. btw shipping to Indonesia",
+          "similarity": 0.6826
+        },
+        {
+          "conversation_id": "conv_236188",
+          "example_id": "pair_0007687",
+          "response_type": "resolution",
+          "customer_text": "Usd 10.99 were charged on my credit card. (2/2)",
+          "similarity": 0.669
+        },
+        {
+          "conversation_id": "conv_205985",
+          "example_id": "pair_0006398",
+          "response_type": "escalation",
+          "customer_text": "and what about this one 👉order id #4__credit_card__",
+          "similarity": 0.6551
+        }
+      ]
+    },
+    {
+      "cluster_id": 4,
+      "sample_count": 374,
+      "sample_percentage": 2.49,
+      "top_keywords": [
+        "date",
+        "delivery_date",
+        "delivery",
+        "order",
+        "release",
+        "estimated",
+        "expected",
+        "release_date",
+        "guaranteed",
+        "nov",
+        "october",
+        "oct",
+        "ordered",
+        "order_date",
+        "update"
+      ],
+      "response_type_breakdown": {
+        "resolution": 167,
+        "escalation": 128,
+        "clarification": 79
+      },
+      "representative_samples": [
+        {
+          "conversation_id": "conv_1409660",
+          "example_id": "pair_0048596",
+          "response_type": "escalation",
+          "customer_text": "The delivery date was supposed to be today",
+          "similarity": 0.7209
+        },
+        {
+          "conversation_id": "conv_1778535",
+          "example_id": "pair_0059121",
+          "response_type": "resolution",
+          "customer_text": "With prime two day yes. Today was the delivery date. <URL>",
+          "similarity": 0.7125
+        },
+        {
+          "conversation_id": "conv_744192",
+          "example_id": "pair_0027586",
+          "response_type": "escalation",
+          "customer_text": "My delivery date for order was 10 October",
+          "similarity": 0.7075
+        },
+        {
+          "conversation_id": "conv_1598862",
+          "example_id": "pair_0054161",
+          "response_type": "clarification",
+          "customer_text": "They changed delivery date to this: <URL>",
+          "similarity": 0.7028
+        },
+        {
+          "conversation_id": "conv_765790",
+          "example_id": "pair_0028226",
+          "response_type": "escalation",
+          "customer_text": "Well the delivery date give to me was 24th November. Haven't got my delivery and now it's showing \"delivery date pending\".",
+          "similarity": 0.6631
+        }
+      ]
+    }
+  ],
+  "execution_time_seconds": 2.17
+}
