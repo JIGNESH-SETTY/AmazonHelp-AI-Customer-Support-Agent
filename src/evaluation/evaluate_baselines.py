@@ -50,6 +50,7 @@ GOLDEN_JSONL_PATH = DATA_DIR / "golden" / "golden_evaluation_set.jsonl"
 TAXONOMY_PATH = DATA_DIR / "intent_taxonomy.json"
 TRAIN_LABELS_PATH = DATA_DIR / "processed" / "amazonhelp_intent_labels.jsonl"
 TRAIN_SPLIT_DIR = DATA_DIR / "processed" / "splits" / "train"
+TRAINING_SAMPLE_GZ_PATH = DATA_DIR / "training_sample.jsonl.gz"
 
 REPORTS_DIR = REPO_ROOT / "reports"
 BASELINE_RESULTS_JSON = REPORTS_DIR / "stage8_baseline_results.json"
@@ -246,52 +247,82 @@ def load_training_corpus(max_samples: int = 30_000) -> Tuple[List[str], List[str
     """
     print(f"[Stage 8] Loading training data (max_samples={max_samples:,})...")
 
-    # 1. Load training labels
-    train_labels: Dict[str, str] = {}
-    with open(TRAIN_LABELS_PATH, encoding="utf-8") as fh:
-        for line in fh:
-            row = json.loads(line)
-            if row.get("split") == "train":
-                train_labels[row["example_id"]] = row["intent_id"]
-
-    print(f"  Available training labels: {len(train_labels):,}")
-
-    train_texts: List[str] = []
-    labels_list: List[str] = []
-    metadata_list: List[Dict[str, Any]] = []
-
-    train_files = [
-        TRAIN_SPLIT_DIR / "amazon_resolution_pairs_train.jsonl",
-        TRAIN_SPLIT_DIR / "amazon_clarification_pairs_train.jsonl",
-        TRAIN_SPLIT_DIR / "amazon_escalation_pairs_train.jsonl",
-    ]
-
-    for tf in train_files:
-        if not tf.exists():
-            continue
-        with open(tf, encoding="utf-8") as fh:
+    # 1. Primary: load directly from processed splits if available
+    if TRAIN_LABELS_PATH.exists() and any((TRAIN_SPLIT_DIR / f).exists() for f in [
+        "amazon_resolution_pairs_train.jsonl",
+        "amazon_clarification_pairs_train.jsonl",
+        "amazon_escalation_pairs_train.jsonl",
+    ]):
+        train_labels: Dict[str, str] = {}
+        with open(TRAIN_LABELS_PATH, encoding="utf-8") as fh:
             for line in fh:
+                row = json.loads(line)
+                if row.get("split") == "train":
+                    train_labels[row["example_id"]] = row["intent_id"]
+
+        print(f"  Available training labels: {len(train_labels):,}")
+
+        train_texts: List[str] = []
+        labels_list: List[str] = []
+        metadata_list: List[Dict[str, Any]] = []
+
+        train_files = [
+            TRAIN_SPLIT_DIR / "amazon_resolution_pairs_train.jsonl",
+            TRAIN_SPLIT_DIR / "amazon_clarification_pairs_train.jsonl",
+            TRAIN_SPLIT_DIR / "amazon_escalation_pairs_train.jsonl",
+        ]
+
+        for tf in train_files:
+            if not tf.exists():
+                continue
+            with open(tf, encoding="utf-8") as fh:
+                for line in fh:
+                    if len(train_texts) >= max_samples:
+                        break
+                    row = json.loads(line)
+                    ex_id = row.get("example_id")
+                    cust_msg = row.get("customer_message", "").strip()
+                    supp_resp = row.get("support_response", "").strip()
+                    intent_id = train_labels.get(ex_id)
+
+                    if cust_msg and supp_resp and intent_id:
+                        train_texts.append(cust_msg)
+                        labels_list.append(intent_id)
+                        metadata_list.append({
+                            "example_id": ex_id,
+                            "conversation_id": row.get("conversation_id"),
+                            "customer_message": cust_msg,
+                            "support_response": supp_resp,
+                            "intent_id": intent_id,
+                        })
+
+        print(f"[Stage 8] Ingested {len(train_texts):,} training interactions for baseline fitting.")
+        return train_texts, labels_list, metadata_list
+
+    # 2. Clean-clone fallback: load from committed lightweight training sample
+    elif TRAINING_SAMPLE_GZ_PATH.exists():
+        import gzip
+        print(f"[Stage 8] Loading from committed clean-clone sample ({TRAINING_SAMPLE_GZ_PATH.name})...")
+        train_texts = []
+        labels_list = []
+        metadata_list = []
+        with gzip.open(TRAINING_SAMPLE_GZ_PATH, "rt", encoding="utf-8") as gz:
+            for line in gz:
                 if len(train_texts) >= max_samples:
                     break
                 row = json.loads(line)
-                ex_id = row.get("example_id")
-                cust_msg = row.get("customer_message", "").strip()
-                supp_resp = row.get("support_response", "").strip()
-                intent_id = train_labels.get(ex_id)
+                train_texts.append(row["customer_message"])
+                labels_list.append(row["intent_id"])
+                metadata_list.append(row["metadata"])
 
-                if cust_msg and supp_resp and intent_id:
-                    train_texts.append(cust_msg)
-                    labels_list.append(intent_id)
-                    metadata_list.append({
-                        "example_id": ex_id,
-                        "conversation_id": row.get("conversation_id"),
-                        "customer_message": cust_msg,
-                        "support_response": supp_resp,
-                        "intent_id": intent_id,
-                    })
+        print(f"[Stage 8] Ingested {len(train_texts):,} training interactions for baseline fitting.")
+        return train_texts, labels_list, metadata_list
 
-    print(f"[Stage 8] Ingested {len(train_texts):,} training interactions for baseline fitting.")
-    return train_texts, labels_list, metadata_list
+    else:
+        raise FileNotFoundError(
+            f"Neither full training split ({TRAIN_LABELS_PATH}) nor clean-clone "
+            f"sample archive ({TRAINING_SAMPLE_GZ_PATH}) was found."
+        )
 
 
 # ---------------------------------------------------------------------------

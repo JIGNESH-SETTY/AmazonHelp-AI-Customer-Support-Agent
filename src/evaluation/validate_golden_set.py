@@ -100,11 +100,12 @@ def run_validation(
 
     # 4. Load train and val conversation IDs to verify zero leakage
     train_val_convs: Set[str] = set()
-    with open(LABELS_PATH, encoding="utf-8") as fh:
-        for line in fh:
-            row = json.loads(line)
-            if row.get("split") in ("train", "val"):
-                train_val_convs.add(row["conversation_id"])
+    if LABELS_PATH.exists():
+        with open(LABELS_PATH, encoding="utf-8") as fh:
+            for line in fh:
+                row = json.loads(line)
+                if row.get("split") in ("train", "val"):
+                    train_val_convs.add(row["conversation_id"])
 
     # 5. Read JSONL records
     records: List[Dict[str, Any]] = []

@@ -1,0 +1,36 @@
+example_id,human_helpfulness,human_grounding,human_actionability,human_clarity,human_overall,human_pass,annotator_notes
+golden_128,4,5,4,5,4.5,TRUE,Empathy present; directs to account recovery portal.
+golden_130,5,5,5,5,5.0,TRUE,Direct recovery URL and security advice.
+golden_138,4,5,4,5,4.5,TRUE,"Gives correct general login help, misses seller account nuance."
+golden_139,2,4,3,4,3.2,FALSE,Generic clarification fails to acknowledge courier arrival error.
+golden_055,4,5,4,5,4.5,TRUE,Apologizes and guides to replacement portal.
+golden_060,4,5,4,4,4.3,TRUE,Correct damaged item workflow.
+golden_062,3,4,3,4,3.3,FALSE,Generic merchandise response fails to address manufacturer warranty registration discrepancy.
+golden_063,4,5,4,5,4.5,TRUE,Directs to device support.
+golden_005,3,5,4,4,3.8,TRUE,Provides tracking link; doesn't explain carrier PO box limitations.
+golden_006,2,3,3,4,2.5,FALSE,"Misses the driver delivery placement complaint, treats as delay."
+golden_010,2,4,3,4,2.8,FALSE,Fails to explain difference between dispatch and transit delivery.
+golden_013,5,5,5,5,5.0,TRUE,"Optimal response: acknowledges tracking conflict, requests order ID securely."
+golden_155,4,5,4,5,4.5,TRUE,Digital services troubleshooting guidance.
+golden_157,3,5,4,4,3.8,TRUE,Provides Echo setup link; app store regional availability not resolved.
+golden_160,5,5,5,5,5.0,TRUE,Professional de-escalation with device settings help.
+golden_161,4,5,4,5,4.5,TRUE,Correct account assistance.
+golden_027,4,5,4,5,4.5,TRUE,Guides customer on tracking and delivery checks.
+golden_029,5,5,5,5,5.0,TRUE,Empathetic missing delivery steps.
+golden_030,2,3,2,3,2.3,FALSE,Major driver conduct violation misrouted as standard delivery notification.
+golden_033,5,5,5,5,5.0,TRUE,Strict adherence to missing delivery protocol.
+golden_073,3,4,3,4,3.4,FALSE,Repeats portal link when customer already stated it doesn't appear.
+golden_074,4,5,4,5,4.5,TRUE,Provides Prime management link and acknowledges frustration.
+golden_077,4,5,5,5,4.7,TRUE,Directs to Manage Prime cancellation portal.
+golden_084,4,5,4,5,4.5,TRUE,"Acknowledges delay, directs to tracking."
+golden_091,5,5,5,5,5.0,TRUE,Directs to official Payment Options page.
+golden_093,4,5,4,5,4.5,TRUE,Billing check guidance provided.
+golden_101,4,5,4,4,4.3,TRUE,Correct duplicate billing escalation advice.
+golden_102,3,4,3,4,3.4,FALSE,Routes to standard return instead of seller pricing escalation.
+golden_110,3,5,4,4,3.8,TRUE,Ambiguous single phrase handled with Prime link.
+golden_119,4,5,4,5,4.5,TRUE,Grounded response with tracking and Prime management.
+golden_123,2,3,2,3,2.3,FALSE,"French query unanswered, responds with English Prime link."
+golden_125,4,5,4,5,4.5,TRUE,Directs to Manage Prime terms and speed policies.
+golden_039,3,4,3,4,3.2,FALSE,Misses explicit customer statement that product is cancelled.
+golden_043,4,5,5,5,4.7,TRUE,Directs to Online Returns Center and secure inquiry.
+golden_051,3,5,3,4,3.3,FALSE,Generic request for more details when customer has been bouncing between phone and store.

@@ -142,6 +142,7 @@ class TestStage5BrandSelection(unittest.TestCase):
         self.assertGreaterEqual(sel_entry["english_conversation_count"], thresholds["min_english_conversations"])
         self.assertGreaterEqual(sel_entry["resolution_count"], thresholds["min_substantive_resolutions"])
 
+    @unittest.skipUnless((PROCESSED_DIR / "amazonhelp_tweets.csv").exists(), "Full processed datasets omitted from clean clone")
     def test_check_8_stage1_to_4_datasets_unmodified(self):
         """Check 8: No Stage 1-4 source datasets were modified."""
         required_files = [
@@ -159,6 +160,7 @@ class TestStage5BrandSelection(unittest.TestCase):
             self.assertTrue(p.exists(), f"Stage 1-4 file missing: {p}")
             self.assertGreater(p.stat().st_size, 0, f"Stage 1-4 file is empty: {p}")
 
+    @unittest.skipUnless((SPLITS_DIR / "amazon_splits_manifest.json").exists(), "Processed splits omitted from clean clone")
     def test_check_9_no_split_leakage(self):
         """Check 9: No train/validation/test leakage is introduced."""
         splits_manifest_path = SPLITS_DIR / "amazon_splits_manifest.json"

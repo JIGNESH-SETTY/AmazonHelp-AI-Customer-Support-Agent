@@ -246,7 +246,7 @@
     "unsupported_action_rate": 0.0,
     "hallucinated_guarantee_rate": 0.0,
     "insecure_request_rate": 0.0,
-    "latency_ms": 3.421
+    "latency_ms": 3.672
   },
   "escalation_metrics": {
     "overall_escalation_rate": 0.105,
@@ -263,11 +263,11 @@
     "low_confidence_rate": 0.02
   },
   "latency_profile": {
-    "mean_ms": 3.421,
-    "median_ms": 3.0,
-    "p95_ms": 7.012,
-    "min_ms": 0.0,
-    "max_ms": 12.001,
+    "mean_ms": 3.672,
+    "median_ms": 3.324,
+    "p95_ms": 7.569,
+    "min_ms": 0.409,
+    "max_ms": 11.4,
     "sample_count": 200
   },
   "error_analysis_summary": {
@@ -479,9 +479,9 @@
     },
     "latency_ms": {
       "stage8_baseline": 0.093,
-      "current_system": 3.421,
-      "absolute_delta": 3.328,
-      "percentage_delta": 3578.49,
+      "current_system": 3.672,
+      "absolute_delta": 3.579,
+      "percentage_delta": 3848.39,
       "improved": false,
       "winner": "Stage 8 Baseline"
     }

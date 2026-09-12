@@ -65,9 +65,9 @@
   },
   "latency_ms": {
     "stage8_baseline": 0.093,
-    "current_system": 3.421,
-    "absolute_delta": 3.328,
-    "percentage_delta": 3578.49,
+    "current_system": 3.672,
+    "absolute_delta": 3.579,
+    "percentage_delta": 3848.39,
     "improved": false,
     "winner": "Stage 8 Baseline"
   }

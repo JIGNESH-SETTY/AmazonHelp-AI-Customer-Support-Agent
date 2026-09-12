@@ -1,0 +1,8 @@
+{
+  "status": "pending_human_annotation",
+  "message": "Human annotation incomplete: agreement analysis not yet available.",
+  "annotated_count": 0,
+  "required_count": 50,
+  "metrics": {},
+  "notes": "Anti-fabrication safeguard active: ratings must be manually populated in human_judge_annotations.csv before calculating statistical agreement."
+}

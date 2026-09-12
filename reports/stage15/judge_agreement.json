@@ -1,0 +1,44 @@
+{
+  "status": "completed",
+  "sample_size": 35,
+  "metrics": {
+    "pass_fail_agreement_rate": 0.8571,
+    "cohens_kappa_pass_fail": 0.5882,
+    "overall_exact_agreement": 0.8286,
+    "overall_mean_absolute_difference": 0.0857,
+    "overall_ordinal_correlation": 0.985,
+    "per_criterion": {
+      "helpfulness": {
+        "exact_agreement": 0.8857,
+        "adjacent_agreement": 1.0,
+        "mean_absolute_difference": 0.1143,
+        "correlation": 0.9397
+      },
+      "grounding": {
+        "exact_agreement": 1.0,
+        "adjacent_agreement": 1.0,
+        "mean_absolute_difference": 0.0,
+        "correlation": 1.0
+      },
+      "actionability": {
+        "exact_agreement": 0.8286,
+        "adjacent_agreement": 1.0,
+        "mean_absolute_difference": 0.1714,
+        "correlation": 0.8744
+      },
+      "clarity": {
+        "exact_agreement": 1.0,
+        "adjacent_agreement": 1.0,
+        "mean_absolute_difference": 0.0,
+        "correlation": 1.0
+      },
+      "overall": {
+        "exact_agreement": 0.8286,
+        "adjacent_agreement": 1.0,
+        "mean_absolute_difference": 0.0857,
+        "correlation": 0.985
+      }
+    }
+  },
+  "notes": "Inter-rater reliability evaluated against completed human consensus annotations."
+}

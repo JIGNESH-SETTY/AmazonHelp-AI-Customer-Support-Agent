@@ -1,0 +1,12 @@
+{
+  "stage": 13,
+  "name": "LLM-as-Judge Reply Quality Evaluation",
+  "provider": "unavailable",
+  "provider_status": "unavailable",
+  "model_configured": "openai/gpt-oss-20b",
+  "sample_size": 50,
+  "random_seed": 42,
+  "metrics_summary": {},
+  "evaluations": [],
+  "notes": "Evaluation pending: Provide GROQ_API_KEY (or OPENAI_API_KEY) to execute live model-based judge"
+}

@@ -43,10 +43,12 @@ coverage.xml
 
 # Local Environment & Secrets
 .env
-.env.local
+.env.*
 *.secret
 *.pem
 *.key
+secrets/
+credentials/
 
 # IDE and Editor Files
 .vscode/
@@ -125,6 +127,7 @@ coverage/
 *.gz
 *.7z
 *.rar
+!data/training_sample.jsonl.gz
 # ==========================================
 # LARGE PROCESSED DATASETS
 # ==========================================

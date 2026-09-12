@@ -41,7 +41,7 @@
       "name": "Stage 11/12 Optimized AI Support Agent",
       "intent_accuracy": 0.8200,
       "macro_f1": 0.8204,
-      "weighted_f1": 0.8189,
+      "weighted_f1": 0.8185,
       "easy_accuracy": 0.8889,
       "medium_accuracy": 0.8537,
       "hard_accuracy": 0.7955,
