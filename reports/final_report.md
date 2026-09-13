@@ -1,11 +1,9 @@
 # Final Hiver Submission Report: AmazonHelp AI Customer Support Agent
 
-**Author**: Engineering Candidate  
 **Project**: AI Customer Support Agent (Hiver SDE Assignment)  
 **Evaluated Brand**: `AmazonHelp` (Twitter Customer Support Dataset)  
 **Submission Artifact**: `reports/final_report.md`  
 **Date**: September 2026  
-**Evaluation Status**: Verified Offline & Reproducible  
 
 ---
 
